@@ -322,10 +322,11 @@ a {
   left: 0;
   top: 0;
   bottom: 0;
-  background-color: #7c8280;
+  background-color: rgba(255, 255, 255, 0.9);
   background-size: cover;
   background-position: center;
   background-image: url('../media/images/sidebar-bg.jpg');
+  opacity: 1;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
@@ -348,28 +349,29 @@ a {
 .sidebar .top-container .site-title {
   font-size: 24px;
   padding: 32px 0;
-  color: #dee2e6;
+  color: #e03131;
 }
 .sidebar .top-container .site-nav {
   display: block;
   padding: 8px 16px;
-  margin: 16px 0;
-  color: #dee2e6;
+  margin: 18px 0;
+  font-size: 16px;
+  color: #c92a2a;
   transition: all 0.3s;
 }
 .sidebar .top-container .site-nav:hover {
-  color: #f8f9fa;
+  color: #66d9e8;
 }
 .sidebar .bottom-container {
   padding: 24px 16px;
-  color: #dee2e6;
+  color: #212529;
   font-size: 12px;
 }
 .sidebar .bottom-container .site-description {
   padding: 16px 0;
 }
 .sidebar .bottom-container a {
-  color: #fff;
+  color: #000;
 }
 .main-container {
   margin-left: 320px;
