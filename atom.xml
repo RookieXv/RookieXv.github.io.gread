@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://RookieXv.github.io</id>
     <title>Java那些事儿</title>
-    <updated>2020-04-22T05:56:04.201Z</updated>
+    <updated>2020-04-22T08:28:23.780Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://RookieXv.github.io"/>
     <link rel="self" href="https://RookieXv.github.io/atom.xml"/>
@@ -342,8 +342,8 @@ public class CodeGenerator {
     </entry>
     <entry>
         <title type="html"><![CDATA[（二）Mybatis-Plus的安装配置]]></title>
-        <id>https://RookieXv.github.io/post/er-mybatis-plus-de-an-zhuang-pei-zhi/</id>
-        <link href="https://RookieXv.github.io/post/er-mybatis-plus-de-an-zhuang-pei-zhi/">
+        <id>https://RookieXv.github.io/post/mybatis-plus-2/</id>
+        <link href="https://RookieXv.github.io/post/mybatis-plus-2/">
         </link>
         <updated>2019-09-27T01:41:21.000Z</updated>
         <content type="html"><![CDATA[<blockquote>
