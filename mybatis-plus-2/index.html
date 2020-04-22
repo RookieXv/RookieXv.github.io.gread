@@ -10,7 +10,7 @@
 记录一些&lt;br /&gt;&lt;br /&gt;
 编程知识、生活琐碎~">
 <meta name="theme-color" content="#000">
-<title>Java那些事儿</title>
+<title>（二）Mybatis-Plus的安装配置 | Java那些事儿</title>
 <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/RookieXv/RookieXv.github.io@master/favicon.ico?v=1587550256378">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/RookieXv/RookieXv.github.io@master/styles/main.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/RookieXv/RookieXv.github.io@master/media/css/gemini.css">
@@ -41,6 +41,8 @@
   })();
 </script>
 
+  <meta name="description" content="（二）Mybatis-Plus的安装配置" />
+  <meta name="keywords" content="mybatis plus" />
 </head>
 
 <body>
@@ -76,7 +78,7 @@
             
               
             
-            <li class="nav-item nav-item-active">
+            <li class="nav-item ">
               
               
                 <a href="/" target="_self">
@@ -168,8 +170,24 @@
     <div
       class="section-layout gemini ">
       <div class="section-layout-wrapper">
-        <div id="sidebarMeta" class="sidebar">
-    
+        
+
+<div class="sidebar">
+  
+    <div class="sidebar-box box-shadow-wrapper bg-color right-motion" id="sidebar">
+      
+        <div class="post-list-sidebar">
+          <div class="sidebar-title">
+            <span id="tocSideBar" class="sidebar-title-item sidebar-title-active">文章目录</span>
+            <span id="metaSideBar" class="sidebar-title-item">站点概览</span>
+          </div>
+        </div>
+      
+      <div class="sidebar-body gemini" id="sidebar_body">
+        
+          
+            <div class="post-side-meta" id="post_side_meta">
+              
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="https://cdn.jsdelivr.net/gh/RookieXv/RookieXv.github.io@master/images/avatar.png"/>
@@ -239,91 +257,298 @@
   </div>
 
 </div>
+            </div>
+            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
+              <div class="toc-box right-motion">
+  <div class="toc-wrapper auto-number auto"
+    id="toc_wrapper">
+    <ul class="markdownIt-TOC">
+<li><a href="#%E4%B8%80-%E5%AE%89%E8%A3%85">一、安装</a>
+<ul>
+<li><a href="#spring-boot"># Spring Boot</a></li>
+<li><a href="#spring-mvc"># Spring MVC</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C-%E9%85%8D%E7%BD%AE">二、配置</a>
+<ul>
+<li><a href="#spring-boot-2"># Spring Boot</a>
+<ul>
+<li><a href="#%E9%85%8D%E7%BD%AE-mapperscan-%E6%B3%A8%E8%A7%A3"><strong>配置 MapperScan 注解</strong></a></li>
+<li><a href="#%E9%85%8D%E7%BD%AEapplicationyml"><strong>配置application.yml</strong></a></li>
+</ul>
+</li>
+<li><a href="#spring-mvc-2"># Spring MVC</a>
+<ul>
+<li><a href="#%E9%85%8D%E7%BD%AE-mapperscan"><strong>配置 MapperScan</strong></a></li>
+<li><a href="#%E8%B0%83%E6%95%B4-sqlsessionfactory-%E4%B8%BA-mybatis-plus-%E7%9A%84-sqlsessionfactory"><strong>调整 SqlSessionFactory 为 MyBatis-Plus 的 SqlSessionFactory</strong></a></li>
+</ul>
+</li>
+<li><a href="#swagger%E9%85%8D%E7%BD%AE"># swagger配置</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
 </div>
+
 <script>
-  let sidebarMeta = document.querySelector('#sidebarMeta');
-  let scheme = 'gemini';
-  let sidebarWrapper = document.querySelector('.sidebar-wrapper');
-  if (sidebarMeta && (scheme === 'pisces' || scheme === 'gemini')) {
-    document.addEventListener('scroll', function(e) {
-      if (document.scrollingElement.scrollTop > parseInt(sidebarMeta.style.marginTop) + 10) {
-        sidebarWrapper.classList.add('home-sidebar-fixed')
-      } else {
-        sidebarWrapper.classList.remove('home-sidebar-fixed')
+
+  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
+  let active = 'active-show', activeClass = 'active-current';
+  let tocWrapper = document.querySelector('#toc_wrapper');
+  let tocContent = tocWrapper.children[0];
+  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
+
+  function addTocNumber(elem, deep) {
+    if (!elem) {
+      return;
+    }
+    let prop = elem.__proto__;
+
+    if (prop === HTMLUListElement.prototype) {
+      for (let i = 0; i < elem.children.length; i++) {
+        addTocNumber(elem.children[i], deep + (i + 1) + '.');
       }
+    } else if (prop === HTMLLIElement.prototype) {
+      // 保存li元素
+      if (elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
+        lList.push(elem);
+      }
+      for (let i = 0; i < elem.children.length; i++) {
+        let cur = elem.children[i];
+        if (cur.__proto__ === HTMLAnchorElement.prototype) {
+          if (autoNumber) {
+            cur.text = deep + ' ' + cur.text;
+          }
+        } else if (cur.__proto__ === HTMLUListElement.prototype) {
+          addTocNumber(cur, deep);
+        }
+      }
+    }
+  }
+
+  function removeParentActiveClass() {
+    let parents = tocContent.querySelectorAll('.' + active)
+    parents.forEach(function (elem) {
+      elem.classList.remove(active);
     });
   }
-  </script>
-        <div class="section-box gemini">
-          <section class="section  posts-expand slide-down-in">
-            
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://liuwenxu.com/mybatis-plus-3/">
-      （三）Mybatis-Plus代码生成器
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span>发布于</span>
-      <span>2019-09-28 18:38:17</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show">分类于</span>
-      
-      
-      <a href="https://liuwenxu.com/kpPhZbM9e/">
-        <span>springboot</span>
-      </a>、
-      
-      
-      
-      <a href="https://liuwenxu.com/GUCThyA_M/">
-        <span>mybatis plus</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>8分钟</span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>1386<span class="pc-show">字数</span></span>
-    </span>
-    
-  </div>
-</header>
-      <div class="post-body">
-        
+
+  function addActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.add(activeClass);
+    }
+  }
+
+  function removeActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.remove(activeClass);
+    }
+  }
+
+  function addActiveLiElemment(elem, parent) {
+    if (!elem || elem === parent) {
+      return;
+    } else {
+      if (elem.__proto__ === HTMLLIElement.prototype) {
+        elem.classList.add(active);
+      }
+      addActiveLiElemment(elem.parentElement, parent);
+    }
+  }
+
+  function showToc() {
+    if (tocWrapper) {
+      postBody = document.querySelector('#post_body');
+      for (let i = 0; i < postBody.children.length; i++) {
+        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
+          hList.push(postBody.children[i]);
+        }
+      }
+      if (tocWrapper.classList.contains('compress')) {
+        tocContent.classList.add('closed');
+      } else if (tocWrapper.classList.contains('no_compress')) {
+        tocContent.classList.add('expanded');
+      } else {
+        if (hList.length > 10) {
+          active = 'active-hidden'
+          tocContent.classList.add('closed');
+        } else {
+          tocContent.classList.add('expanded');
+        }
+      }
+    }
+  }
+
+  (function () {
+    // 处理不是从#一级标题开始目录
+    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
+      let con = tocContent.children[0].children[0];
+      tocContent.innerHTML = con.innerHTML;
+    }
+    let markdownItTOC = document.querySelector('.markdownIt-TOC');
+    let innerHeight = window.innerHeight;
+    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
+    addTocNumber(tocContent, '');
+  })();
+
+  document.addEventListener('scroll', function (e) {
+    if (lList.length <= 0) {
+      return;
+    }
+    let scrollTop = document.scrollingElement.scrollTop + 10;
+    let dir;
+
+    if (lastTop - scrollTop > 0) {
+      dir = 'up';
+    } else {
+      dir = 'down';
+    }
+
+    lastTop = scrollTop;
+    if (scrollTop <= 0) {
+      if (lastIndex >= 0 && lastIndex < hList.length) {
+        lList[lastIndex].classList.remove(activeClass);
+      }
+      return;
+    }
+
+    let current = 0, hasFind = false;
+    for (let i = 0; i < hList.length; i++) {
+      if (hList[i].offsetTop > scrollTop) {
+        current = i;
+        hasFind = true;
+        break;
+      }
+    }
+    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
+      current = hList.length - 1;
+    } else {
+      current--;
+    }
+    if (dir === 'down') {
+      if (current > lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex)
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    } else {
+      if (current < lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex);
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    }
+  });
+
+  window.addEventListener('load', function () {
+    showToc();
+    document.querySelector('#sidebar').style = 'display: block;';
+    tocWrapper.classList.add('toc-active');
+    setTimeout(function () {
+      if ("createEvent" in document) {
+        let evt = document.createEvent("HTMLEvents");
+        evt.initEvent("scroll", false, true);
+        document.dispatchEvent(evt);
+      }
+      else {
+        document.fireEvent("scroll");
+      }
+    }, 500)
+  })
+
+</script>
+            </div>
           
         
-        
-        <div class="post-button text-center">
-          <a class="btn" href="https://liuwenxu.com/mybatis-plus-3/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
       </div>
-      
     </div>
-  </article>
+  
+</div>
+<script>
+  const SIDEBAR_TITLE_ACTIVE = 'sidebar-title-active';
+  const SIDEBAR_BODY_ACTIVE = 'sidebar-body-active';
+  const SLIDE_UP_IN = 'slide-up-in';
 
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
+  let sidebar = document.querySelector('#sidebar'),
+  tocSideBar = document.querySelector('#tocSideBar'),
+  metaSideBar = document.querySelector('#metaSideBar'),
+  postToc = document.querySelector('#post_toc'),
+  postSiteMeta = document.querySelector('#post_side_meta'),
+  sidebarTitle = document.querySelector('.sidebar-title'),
+  sidebarBody = document.querySelector('#sidebar_body');
+
+  tocSideBar && tocSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  metaSideBar && metaSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  function toggleSidebar(e) {
+    let currentTitle = document.querySelector("."+SIDEBAR_TITLE_ACTIVE);
+    if (currentTitle == e.srcElement) {
+      return ;
+    }
+    let current, showElement, hideElement;
+    if (e.srcElement == metaSideBar) {
+      showElement = postSiteMeta;
+      hideElement = postToc;
+    } else if (e.srcElement == tocSideBar){
+      showElement = postToc;
+      hideElement = postSiteMeta;
+    }
+    currentTitle.classList.remove(SIDEBAR_TITLE_ACTIVE);
+    e.srcElement.classList.add(SIDEBAR_TITLE_ACTIVE);
+
+    window.Velocity(hideElement, 'stop');
+    window.Velocity(hideElement, 'transition.slideUpOut', {
+      display: 'none',
+      duration: 200,
+      complete: function () {
+        window.Velocity(showElement, 'transition.slideDownIn', {
+          duration: 200
+        });
+      }
+    })
+    hideElement.classList.remove(SIDEBAR_BODY_ACTIVE);
+    showElement.classList.add(SIDEBAR_BODY_ACTIVE);
+  }
+
+  postToc && postToc.addEventListener('transitionend', function() {
+    this.classList.remove(SLIDE_UP_IN);
+  });
+
+  if (sidebarBody) {
+    if (sidebarBody.classList.contains('pisces') || sidebarBody.classList.contains('gemini')) {
+      let hasFix = false;
+      let scrollEl = document.querySelector('.main-continer');
+      let limitTop = document.querySelector('#nav_ul').children.length * 42 + 162;
+      window.addEventListener('scroll', function(e) {
+        if (document.scrollingElement.scrollTop >= limitTop) {
+          if (!hasFix) {
+            sidebar.classList.add('sidebar-fixed');
+            hasFix = true;
+          }
+        } else {
+          if (hasFix) {
+            sidebar.classList.remove('sidebar-fixed');
+            hasFix = false;
+          }
+        }
+      });
+    }
+  }
+  
+</script>
+        <div class="section-box box-shadow-wrapper">
+          <div class="section bg-color post post-page">
+            <header class="post-header">
   <h1 class="post-title">
     <a class="post-title-link" href="https://liuwenxu.com/mybatis-plus-2/">
       （二）Mybatis-Plus的安装配置
@@ -361,160 +586,302 @@
       <span>985<span class="pc-show">字数</span></span>
     </span>
     
-  </div>
-</header>
-      <div class="post-body">
-        
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn" href="https://liuwenxu.com/mybatis-plus-2/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-    </div>
-  </article>
-
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://liuwenxu.com/mybatis-plus-1/">
-      （一）初识Mybatis-Plus
-    </a>
-  </h1>
-  <div class="post-meta">
     
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span>发布于</span>
-      <span>2019-09-26 14:35:16</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
     
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show">分类于</span>
-      
-      
-      <a href="https://liuwenxu.com/GUCThyA_M/">
-        <span>mybatis plus</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>3分钟</span>
-    </span>
-    <span class="meta-item">
+    <span id="/mybatis-plus-2/" data-flag-title="（二）Mybatis-Plus的安装配置" class="meta-item pc-show leancloud_visitors">
       <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>712<span class="pc-show">字数</span></span>
+      <i class="fa fa-eye"></i>
+      <span>浏览量：<span class="leancloud-visitors-count"></span></span>
     </span>
     
   </div>
 </header>
-      <div class="post-body">
-        
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn" href="https://liuwenxu.com/mybatis-plus-1/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-    </div>
-  </article>
+            <div class="post-body next-md-body" id="post_body">
+              <blockquote>
+<p>上一篇文章我们认识了Mybatis-Plus，这篇文章我们一起学习Mybatis-Plus在项目中怎么使用。</p>
+</blockquote>
+<p><strong>项目结构如下：</strong></p>
+<pre><code class="language-bash">  src
+   ├─main
+   │  ├─java
+   │  │  └─com
+   │  │      └─example
+   │  │          └─mybatisplus
+   │  │              └─config
+   │  └─resources
+   │      ├─static
+   │      └─templates
+   └─test
+       └─java
+           └─com
+               └─example
+                   └─mybatisplus
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动" loading="lazy"></figure>
+<h1 id="一-安装">一、安装</h1>
+<p>全新的 <code>MyBatis-Plus</code> 3.0 版本基于 JDK8，提供了 <code>lambda</code> 形式的调用，所以安装集成 MP3.0 要求如下：</p>
+<ul>
+<li>JDK 8+</li>
+<li>Maven</li>
+</ul>
+<p>JDK7 以及下的请参考 MP2.0 版本官方文档，地址：<a href="https://baomidou.gitee.io/mybatis-plus-doc/#/">2.0 文档</a></p>
+<p>我们在该项目中集成了mybatis-plus，lombok，swagger，集体配置如下：</p>
+<h2 id="spring-boot"># Spring Boot</h2>
+<p>Maven：</p>
+<pre><code class="language-java">&lt;properties&gt;
+    &lt;java.version&gt;1.8&lt;/java.version&gt;
+    &lt;spring-boot.version&gt;2.0.5.RELEASE&lt;/spring-boot.version&gt;
+    &lt;mybatis-plus.version&gt;3.0-RELEASE&lt;/mybatis-plus.version&gt;
+    &lt;swagger.version&gt;2.9.2&lt;/swagger.version&gt;
+    &lt;lombok.version&gt;1.16.10&lt;/lombok.version&gt;
+&lt;/properties&gt;
+</code></pre>
+<pre><code class="language-bash">&lt;!-- 连接mysql --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;mysql&lt;/groupId&gt;
+    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;!-- mybatis-plus --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;com.baomidou&lt;/groupId&gt;
+    &lt;artifactId&gt;mybatis-plus-boot-starter&lt;/artifactId&gt;
+    &lt;version&gt;${mybatis-plus.version}&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;!-- lombok --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+    &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+    &lt;version&gt;${lombok.version}&lt;/version&gt;
+    &lt;scope&gt;provided&lt;/scope&gt;
+&lt;/dependency&gt;
+&lt;!-- swagger配置 --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;io.springfox&lt;/groupId&gt;
+    &lt;artifactId&gt;springfox-swagger2&lt;/artifactId&gt;
+    &lt;version&gt;${swagger.version}&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;io.springfox&lt;/groupId&gt;
+    &lt;artifactId&gt;springfox-swagger-ui&lt;/artifactId&gt;
+    &lt;version&gt;${swagger.version}&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h2 id="spring-mvc"># Spring MVC</h2>
+<p>Maven:</p>
+<pre><code class="language-bash">&lt;!-- mybatis-plus --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;com.baomidou&lt;/groupId&gt;
+    &lt;artifactId&gt;mybatis-plus&lt;/artifactId&gt;
+    &lt;version&gt;${mybatis-plus.version}&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;!-- 连接mysql --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;mysql&lt;/groupId&gt;
+    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;!-- lombok --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+    &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+    &lt;version&gt;${lombok.version}&lt;/version&gt;
+    &lt;scope&gt;provided&lt;/scope&gt;
+&lt;/dependency&gt;
+&lt;!-- swagger配置 --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;io.springfox&lt;/groupId&gt;
+    &lt;artifactId&gt;springfox-swagger2&lt;/artifactId&gt;
+    &lt;version&gt;${swagger.version}&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;io.springfox&lt;/groupId&gt;
+    &lt;artifactId&gt;springfox-swagger-ui&lt;/artifactId&gt;
+    &lt;version&gt;${swagger.version}&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<hr>
+<p>引入 <code>MyBatis-Plus</code> 之后请不要再次引入 <code>MyBatis</code> 以及 <code>MyBatis-Spring</code>，以避免因版本差异导致的问题。</p>
+<h1 id="二-配置">二、配置</h1>
+<p>MyBatis-Plus 的配置异常的简单，我们仅需要一些简单的配置即可使用 MyBatis-Plus 的强大功能。</p>
+<h2 id="spring-boot-2"># Spring Boot</h2>
+<h3 id="配置-mapperscan-注解"><strong>配置 MapperScan 注解</strong></h3>
+<pre><code class="language-java">@SpringBootApplication
+@MapperScan(&quot;com.example.mybatis-plus.**.mapper&quot;)
+public class MybatisPlusApplication {
 
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://liuwenxu.com/hello-gridea/">
-      Hello Gridea
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span>发布于</span>
-      <span>2018-12-12 00:00:00</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show">分类于</span>
-      
-      
-      <a href="https://liuwenxu.com/qXFGcVeBq/">
-        <span>Gridea</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>2分钟</span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>298<span class="pc-show">字数</span></span>
-    </span>
-    
-  </div>
-</header>
-      <div class="post-body">
-        
-          <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+    public static void main(String[] args) {
+        SpringApplication.run(MybatisPlusApplication.class, args);
+    }
 
-        
-        
-        <div class="post-button text-center">
-          <a class="btn" href="https://liuwenxu.com/hello-gridea/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-    </div>
-  </article>
-  
-            
-            
-<div class="page bg-color">
-  <ul class="pagination-ul">
-    
-    
-      
-        <li class="pagination-li pagination-active">
-            <a href="/page/../">
-              1
-            </a>
-        </li>
-      
-    
-    
+}
+</code></pre>
+<h3 id="配置applicationyml"><strong>配置application.yml</strong></h3>
+<pre><code class="language-bash">mybatis-plus:
+  # xml地址
+  mapper-locations: classpath*:mapper/*/*Mapper.xml
+  # 实体扫描，多个package用逗号或者分号分隔 #自己的实体类地址
+  type-aliases-package: com.example.mybatis-plus
+  configuration:
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #开启驼峰命名法
+    map-underscore-to-camel-case: true
+</code></pre>
+<h2 id="spring-mvc-2"># Spring MVC</h2>
+<ul>
+<li>
+<h3 id="配置-mapperscan"><strong>配置 MapperScan</strong></h3>
+</li>
+</ul>
+<pre><code class="language-bash">&lt;bean class=&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;&gt;
+    &lt;property name=&quot;basePackage&quot; value=&quot;com.baomidou.mybatisplus.samples.quickstart.mapper&quot;/&gt;
+&lt;/bean&gt;
+</code></pre>
+<ul>
+<li>
+<h3 id="调整-sqlsessionfactory-为-mybatis-plus-的-sqlsessionfactory"><strong>调整 SqlSessionFactory 为 MyBatis-Plus 的 SqlSessionFactory</strong></h3>
+</li>
+</ul>
+<pre><code class="language-bash">&lt;bean id=&quot;sqlSessionFactory&quot; class=&quot;com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean&quot;&gt;
+    &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;/&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>通常来说，一般的简单工程，通过以上配置即可正常使用 MyBatis-Plus。</p>
+<h2 id="swagger配置"># swagger配置</h2>
+<pre><code class="language-java">package com.example.mybatisplus.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+/**
+ * Copyright (C), 2016-2019, Mobius-Vision
+ * FileName: SwaggerConfig
+ * Author: liuwenxu
+ * Date: 2019/7/10 14:59
+ * Description: 接口文档说明  http://localhost:8089/swagger-ui.html#/
+ */
+@Configuration
+@EnableSwagger2
+public class SwaggerConfig {
+    @Bean
+    public Docket createRestApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage(&quot;com.example.mybatis-plus.controller&quot;))
+                .paths(PathSelectors.any())
+                .build();
+    }
+
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title(&quot;mybatis-plus&quot;)
+                .description(&quot;mybatis-plus&quot;)
+                .contact(new Contact(&quot;liuwenxu&quot;, &quot;&quot;, &quot;&quot;))
+                .version(&quot;2.0&quot;)
+                .build();
+    }
+
+}
+ 
+</code></pre>
+
+            </div>
+            <div class="post-footer">
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      刘文旭
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuwenxu.com/mybatis-plus-2/" title="（二）Mybatis-Plus的安装配置">https://liuwenxu.com/mybatis-plus-2/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i> BY-NC-SA</a> 许可协议。转载请注明出处！
+    </li>
   </ul>
+  <div class="tags">
+    
+      <a href="https://liuwenxu.com/GUCThyA_M/"># mybatis plus</a>
+    
+  </div>
+  <div class="nav">
+    <div class="nav-prev">
+      
+        <i class="fa fa-chevron-left"></i>
+        <a class="nav-pc-next" title="（三）Mybatis-Plus代码生成器" href="https://liuwenxu.com/mybatis-plus-3/">（三）Mybatis-Plus代码生成器</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title="（三）Mybatis-Plus代码生成器" href="https://liuwenxu.com/mybatis-plus-3/">上一篇</a>
+      
+    </div>
+    <div class="nav-next">
+      
+        <a class="nav-pc-next" title="（一）初识Mybatis-Plus" href="https://liuwenxu.com/mybatis-plus-1/">（一）初识Mybatis-Plus</a>
+        <a class="nav-mobile-next" title="（一）初识Mybatis-Plus" href="https://liuwenxu.com/mybatis-plus-1/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
+      
+    </div>
+  </div>
 </div>
-          </section>
+
+            
+  <script src="https://cdn.jsdelivr.net/npm/valine@1.4.4/dist/Valine.min.js"></script>
+<div id="vcomments" style="padding: 10px 0px 0px 0px"></div>
+
+<style>
+  .v .veditor {
+    min-height: 10rem;
+    background-image: url('');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    background-color: rgba(255, 255, 255, 0);
+    resize: none;
+  }
+
+  .v .vwrap {
+    border: 1px solid #000 !important;
+  }
+
+  .v .vbtn {
+    padding: .4rem 1.2rem !important;
+    border-color: #fff !important;
+    background-color: #49b1f5 !important;
+    color: #fff !important;
+    font-size: .7rem !important;
+  }
+
+  .v .vcards .vcard .vh .vmeta .vat {
+    padding: 0 .8rem !important;
+    border: 1px solid #00c4b6 !important;
+    border-radius: 5px !important;
+    color: #00c4b6 !important;
+  }
+</style>
+<script>
+  new Valine({
+    el: '#vcomments',
+    appId: 'E9bQfM6iA6DLO0dIDBfcNCGg-gzGzoHsz',
+    appKey: 'J4c2BepQrWR9xGXraOEyqkhA',
+    avatar: 'robohash',
+    placeholder: '',
+    pageSize: '5',
+    lang: 'zh-cn',
+    visitor: 'true' === 'true',
+    highlight: 'true' === 'true',
+    avatarForce: 'true' === 'false',
+  });
+</script>
+
+          </div>
         </div>
       </div>
     </div>
@@ -1505,5 +1872,4 @@ public class SwaggerConfig {
 <script src="/media/js/mouse/love.js"></script>
 
 <!-- <script src="/media/js/mouse/peace.js"></script> -->
-
 </html>
