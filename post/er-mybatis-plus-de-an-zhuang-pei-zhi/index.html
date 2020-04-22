@@ -3,11 +3,11 @@
 <head>
 <link rel="shortcut icon" href="https://RookieXv.github.io/favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="微信公众号：Java那些事儿&lt;br /&gt;&lt;br /&gt;
 记录一些&lt;br /&gt;&lt;br /&gt;
-编程知识、生活琐碎~"><meta charset="UTF-8"><title>关于 | Java那些事儿</title>
+编程知识、生活琐碎~"><meta charset="UTF-8"><title>（二）Mybatis-Plus的安装配置 | Java那些事儿</title>
 <link href="https://RookieXv.github.io/styles/main.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://RookieXv.github.io/media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://RookieXv.github.io/media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
 <script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
 
-<link rel="canonical" href="https://RookieXv.github.io/post/about/" />
+<link rel="canonical" href="https://RookieXv.github.io/post/er-mybatis-plus-de-an-zhuang-pei-zhi/" />
 </head>
 <body>
 <div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
@@ -25,34 +25,242 @@
 
 <div class="main"><div class="main-inner"><div class="content">
 <article class="post">
-<h2 class="post_title sm_margin"><a>关于</a></h2>
+<h2 class="post_title sm_margin"><a>（二）Mybatis-Plus的安装配置</a></h2>
 <script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
-<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2019-01-25 19:09:48</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px"></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">31字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">1 min read</span><a id="lan" href="javascript:void(0);"onclick="lan();"title="调整简繁体" style="margin-right:15px;">繁</a>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2019-09-27 09:41:21</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://RookieXv.github.io/tag/GUCThyA_M/" class="tag">mybatis plus</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">1025字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">6 min read</span><a id="lan" href="javascript:void(0);"onclick="lan();"title="调整简繁体" style="margin-right:15px;">繁</a>
 </section>
+
+<img class="featureImg" alt="featureimg" src="https://RookieXv.github.io/post-images/er-mybatis-plus-de-an-zhuang-pei-zhi.png" referrerpolicy="no-referrer">
 
 <div style="display:flex">
 <div class="md_block" id="md_block">
 <div class="round-shape-one"></div>
 <blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
+<p>上一篇文章我们认识了Mybatis-Plus，这篇文章我们一起学习Mybatis-Plus在项目中怎么使用。</p>
 </blockquote>
-<h2 id="关于本站">🏠 关于本站</h2>
-<h2 id="博主是谁">👨‍💻 博主是谁</h2>
-<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
-<h2 id="联系我呀">📬 联系我呀</h2>
+<p><strong>项目结构如下：</strong></p>
+<pre><code class="language-bash">  src
+   ├─main
+   │  ├─java
+   │  │  └─com
+   │  │      └─example
+   │  │          └─mybatisplus
+   │  │              └─config
+   │  └─resources
+   │      ├─static
+   │      └─templates
+   └─test
+       └─java
+           └─com
+               └─example
+                   └─mybatisplus
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动" loading="lazy"></figure>
+<h1 id="一-安装">一、安装</h1>
+<p>全新的 <code>MyBatis-Plus</code> 3.0 版本基于 JDK8，提供了 <code>lambda</code> 形式的调用，所以安装集成 MP3.0 要求如下：</p>
+<ul>
+<li>JDK 8+</li>
+<li>Maven</li>
+</ul>
+<p>JDK7 以及下的请参考 MP2.0 版本官方文档，地址：<a href="https://baomidou.gitee.io/mybatis-plus-doc/#/">2.0 文档</a></p>
+<p>我们在该项目中集成了mybatis-plus，lombok，swagger，集体配置如下：</p>
+<h2 id="spring-boot"># Spring Boot</h2>
+<p>Maven：</p>
+<pre><code class="language-java">&lt;properties&gt;
+    &lt;java.version&gt;1.8&lt;/java.version&gt;
+    &lt;spring-boot.version&gt;2.0.5.RELEASE&lt;/spring-boot.version&gt;
+    &lt;mybatis-plus.version&gt;3.0-RELEASE&lt;/mybatis-plus.version&gt;
+    &lt;swagger.version&gt;2.9.2&lt;/swagger.version&gt;
+    &lt;lombok.version&gt;1.16.10&lt;/lombok.version&gt;
+&lt;/properties&gt;
+</code></pre>
+<pre><code class="language-bash">&lt;!-- 连接mysql --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;mysql&lt;/groupId&gt;
+    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;!-- mybatis-plus --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;com.baomidou&lt;/groupId&gt;
+    &lt;artifactId&gt;mybatis-plus-boot-starter&lt;/artifactId&gt;
+    &lt;version&gt;${mybatis-plus.version}&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;!-- lombok --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+    &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+    &lt;version&gt;${lombok.version}&lt;/version&gt;
+    &lt;scope&gt;provided&lt;/scope&gt;
+&lt;/dependency&gt;
+&lt;!-- swagger配置 --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;io.springfox&lt;/groupId&gt;
+    &lt;artifactId&gt;springfox-swagger2&lt;/artifactId&gt;
+    &lt;version&gt;${swagger.version}&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;io.springfox&lt;/groupId&gt;
+    &lt;artifactId&gt;springfox-swagger-ui&lt;/artifactId&gt;
+    &lt;version&gt;${swagger.version}&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h2 id="spring-mvc"># Spring MVC</h2>
+<p>Maven:</p>
+<pre><code class="language-bash">&lt;!-- mybatis-plus --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;com.baomidou&lt;/groupId&gt;
+    &lt;artifactId&gt;mybatis-plus&lt;/artifactId&gt;
+    &lt;version&gt;${mybatis-plus.version}&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;!-- 连接mysql --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;mysql&lt;/groupId&gt;
+    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;!-- lombok --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+    &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+    &lt;version&gt;${lombok.version}&lt;/version&gt;
+    &lt;scope&gt;provided&lt;/scope&gt;
+&lt;/dependency&gt;
+&lt;!-- swagger配置 --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;io.springfox&lt;/groupId&gt;
+    &lt;artifactId&gt;springfox-swagger2&lt;/artifactId&gt;
+    &lt;version&gt;${swagger.version}&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;io.springfox&lt;/groupId&gt;
+    &lt;artifactId&gt;springfox-swagger-ui&lt;/artifactId&gt;
+    &lt;version&gt;${swagger.version}&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<hr>
+<p>引入 <code>MyBatis-Plus</code> 之后请不要再次引入 <code>MyBatis</code> 以及 <code>MyBatis-Spring</code>，以避免因版本差异导致的问题。</p>
+<h1 id="二-配置">二、配置</h1>
+<p>MyBatis-Plus 的配置异常的简单，我们仅需要一些简单的配置即可使用 MyBatis-Plus 的强大功能。</p>
+<h2 id="spring-boot-2"># Spring Boot</h2>
+<h3 id="配置-mapperscan-注解"><strong>配置 MapperScan 注解</strong></h3>
+<pre><code class="language-java">@SpringBootApplication
+@MapperScan(&quot;com.example.mybatis-plus.**.mapper&quot;)
+public class MybatisPlusApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(MybatisPlusApplication.class, args);
+    }
+
+}
+</code></pre>
+<h3 id="配置applicationyml"><strong>配置application.yml</strong></h3>
+<pre><code class="language-bash">mybatis-plus:
+  # xml地址
+  mapper-locations: classpath*:mapper/*/*Mapper.xml
+  # 实体扫描，多个package用逗号或者分号分隔 #自己的实体类地址
+  type-aliases-package: com.example.mybatis-plus
+  configuration:
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #开启驼峰命名法
+    map-underscore-to-camel-case: true
+</code></pre>
+<h2 id="spring-mvc-2"># Spring MVC</h2>
+<ul>
+<li>
+<h3 id="配置-mapperscan"><strong>配置 MapperScan</strong></h3>
+</li>
+</ul>
+<pre><code class="language-bash">&lt;bean class=&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;&gt;
+    &lt;property name=&quot;basePackage&quot; value=&quot;com.baomidou.mybatisplus.samples.quickstart.mapper&quot;/&gt;
+&lt;/bean&gt;
+</code></pre>
+<ul>
+<li>
+<h3 id="调整-sqlsessionfactory-为-mybatis-plus-的-sqlsessionfactory"><strong>调整 SqlSessionFactory 为 MyBatis-Plus 的 SqlSessionFactory</strong></h3>
+</li>
+</ul>
+<pre><code class="language-bash">&lt;bean id=&quot;sqlSessionFactory&quot; class=&quot;com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean&quot;&gt;
+    &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;/&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>通常来说，一般的简单工程，通过以上配置即可正常使用 MyBatis-Plus。</p>
+<h2 id="swagger配置"># swagger配置</h2>
+<pre><code class="language-java">package com.example.mybatisplus.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+/**
+ * Copyright (C), 2016-2019, Mobius-Vision
+ * FileName: SwaggerConfig
+ * Author: liuwenxu
+ * Date: 2019/7/10 14:59
+ * Description: 接口文档说明  http://localhost:8089/swagger-ui.html#/
+ */
+@Configuration
+@EnableSwagger2
+public class SwaggerConfig {
+    @Bean
+    public Docket createRestApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage(&quot;com.example.mybatis-plus.controller&quot;))
+                .paths(PathSelectors.any())
+                .build();
+    }
+
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title(&quot;mybatis-plus&quot;)
+                .description(&quot;mybatis-plus&quot;)
+                .contact(new Contact(&quot;liuwenxu&quot;, &quot;&quot;, &quot;&quot;))
+                .version(&quot;2.0&quot;)
+                .build();
+    }
+
+}
+ 
+</code></pre>
+<h1 id="三-总结">三、总结</h1>
+<p>至此，<code>mybatis plus</code> 的基础使用已经介绍完了，后面我将陆续为大家介绍她的高级用法，收藏一下吧！</p>
 
 <span id="footnote"></span>
 <div id = "warn"></div>
 </div>
 <div class="toc-container"><ul class="markdownIt-TOC">
-<li>
+<li><a href="#%E4%B8%80-%E5%AE%89%E8%A3%85">一、安装</a>
 <ul>
-<li><a href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99">🏠 关于本站</a></li>
-<li><a href="#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81">👨‍💻 博主是谁</a></li>
-<li><a href="#%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD">⛹ 兴趣爱好</a></li>
-<li><a href="#%E8%81%94%E7%B3%BB%E6%88%91%E5%91%80">📬 联系我呀</a></li>
+<li><a href="#spring-boot"># Spring Boot</a></li>
+<li><a href="#spring-mvc"># Spring MVC</a></li>
 </ul>
 </li>
+<li><a href="#%E4%BA%8C-%E9%85%8D%E7%BD%AE">二、配置</a>
+<ul>
+<li><a href="#spring-boot-2"># Spring Boot</a>
+<ul>
+<li><a href="#%E9%85%8D%E7%BD%AE-mapperscan-%E6%B3%A8%E8%A7%A3"><strong>配置 MapperScan 注解</strong></a></li>
+<li><a href="#%E9%85%8D%E7%BD%AEapplicationyml"><strong>配置application.yml</strong></a></li>
+</ul>
+</li>
+<li><a href="#spring-mvc-2"># Spring MVC</a>
+<ul>
+<li><a href="#%E9%85%8D%E7%BD%AE-mapperscan"><strong>配置 MapperScan</strong></a></li>
+<li><a href="#%E8%B0%83%E6%95%B4-sqlsessionfactory-%E4%B8%BA-mybatis-plus-%E7%9A%84-sqlsessionfactory"><strong>调整 SqlSessionFactory 为 MyBatis-Plus 的 SqlSessionFactory</strong></a></li>
+</ul>
+</li>
+<li><a href="#swagger%E9%85%8D%E7%BD%AE"># swagger配置</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%89-%E6%80%BB%E7%BB%93">三、总结</a></li>
 </ul>
 </div>
 </div>
@@ -78,7 +286,7 @@ if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop)
 var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
 var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
 var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
-content="本文最后更新于2019-01-25 19:09:48，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2019-01-25 19:09:48";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+content="本文最后更新于2019-09-27 09:41:21，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2019-09-27 09:41:21";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
 </script>
 <style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
 <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"></div></div><div class="copyright"id="copyright">Powered by<a href="https://liuwenxu.com" target="_blank">Liu Wenxu</a>Copyright © 2018-2020 <a href="https://RookieXv.github.io" style="margin:0;">Java那些事儿</a>.</div>

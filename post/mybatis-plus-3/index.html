@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="shortcut icon" href="https://RookieXv.github.io/favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="微信公众号：Java那些事儿&lt;br /&gt;&lt;br /&gt;
+记录一些&lt;br /&gt;&lt;br /&gt;
+编程知识、生活琐碎~"><meta charset="UTF-8"><title>（三）Mybatis-Plus代码生成器 | Java那些事儿</title>
+<link href="https://RookieXv.github.io/styles/main.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://RookieXv.github.io/media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://RookieXv.github.io/media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+<script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
+
+<link rel="canonical" href="https://RookieXv.github.io/post/mybatis-plus-3/" />
+</head>
+<body>
+<div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
+<noscript><p class="warn" >本页面需要浏览器支持（启用）JavaScript</p></noscript><div class="header"><div class="logo_title"><div class="title animated fadeInDown"><a href="https://RookieXv.github.io"><img alt="logo" style="display:inline-block;" src="https://RookieXv.github.io/images/avatar.png"/></a><h1 title="Java那些事儿" class="weaklink"><a  href="/">Java那些事儿</a></h1>
+
+<div class="navbar weaklink">
+<div class="normal_nav">
+<div class="bitcron_nav_container"><div class="bitcron_nav"><div class="bitcron_nav"><div style="display:flex;justify-content:center;"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/archives" class="selected active current nav__item" >归档</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/post/about" class="selected active current nav__item" >关于</a></li></ul></nav>
+<div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+<div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
+<div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/archives" class="selected active current nav__item" >归档</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/post/about" class="selected active current nav__item" >关于</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
+<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1587527819508" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+</div></div>
+<script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
+
+<div class="main"><div class="main-inner"><div class="content">
+<article class="post">
+<h2 class="post_title sm_margin"><a>（三）Mybatis-Plus代码生成器</a></h2>
+<script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2019-09-28 18:38:17</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://RookieXv.github.io/tag/GUCThyA_M/" class="tag">mybatis plus</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">1346字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">8 min read</span><a id="lan" href="javascript:void(0);"onclick="lan();"title="调整简繁体" style="margin-right:15px;">繁</a>
+</section>
+
+<img class="featureImg" alt="featureimg" src="https://RookieXv.github.io/post-images/mybatis-plus-3.png" referrerpolicy="no-referrer">
+
+<div style="display:flex">
+<div class="md_block" id="md_block">
+<div class="round-shape-one"></div>
+<blockquote>
+<p>上一篇我们已经把所有需要的东西配置好了，接下来我们准备连接数据库生成代码。</p>
+</blockquote>
+<p>首先准备一张student表：</p>
+<pre><code class="language-sql">SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for student
+-- ----------------------------
+DROP TABLE IF EXISTS `student`;
+CREATE TABLE `student`  (
+  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '学生id',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '姓名',
+  `age` int(11) NULL DEFAULT NULL COMMENT '年龄',
+  `is_valid` int(11) NULL DEFAULT NULL COMMENT '是否在读',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+SET FOREIGN_KEY_CHECKS = 1;
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动" loading="lazy"></figure>
+<h1 id="一-配置代码生成器">一、配置代码生成器</h1>
+<blockquote>
+<p>Mybatis-Plus的代码生成器是不需要依赖spring的，所以我们可以直接在test中新建一个类<strong>CodeGeneratorDefault</strong></p>
+</blockquote>
+<h2 id="默认模板生成"><strong>默认模板生成：</strong></h2>
+<pre><code class="language-java">import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.generator.AutoGenerator;
+import com.baomidou.mybatisplus.generator.InjectionConfig;
+import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.po.TableInfo;
+import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class CodeGeneratorDefault {
+
+
+    /**
+     * &lt;p&gt;
+     * 读取控制台内容
+     * &lt;/p&gt;
+     */
+
+    public static String scanner(String tip) {
+        Scanner scanner = new Scanner(System.in);
+        StringBuilder help = new StringBuilder();
+        help.append(&quot;请输入&quot; + tip + &quot;：&quot;);
+        System.out.println(help.toString());
+        if (scanner.hasNext()) {
+            String ipt = scanner.next();
+            if (StringUtils.isNotEmpty(ipt)) {
+                return ipt;
+            }
+        }
+        throw new MybatisPlusException(&quot;请输入正确的&quot; + tip + &quot;！&quot;);
+    }
+
+    public static void main(String[] args) {
+        // 代码生成器
+        AutoGenerator mpg = new AutoGenerator();
+
+        // 全局配置
+        GlobalConfig gc = new GlobalConfig();
+        String projectPath = System.getProperty(&quot;user.dir&quot;);
+        gc.setOutputDir(projectPath + &quot;/src/main/java&quot;);
+        gc.setAuthor(&quot;liuwenxu&quot;);
+        gc.setOpen(false);
+        gc.setSwagger2(true); // 实体属性 Swagger2 注解
+        mpg.setGlobalConfig(gc);
+
+        // 数据源配置
+        DataSourceConfig dsc = new DataSourceConfig();
+        dsc.setUrl(&quot;jdbc:mysql://172.30.7.143:3306/wxyj_sj?serverTimezone=UTC&amp;characterEncoding=utf-8&amp;useSSL=false&quot;);
+        // dsc.setSchemaName(&quot;public&quot;);
+        dsc.setDriverName(&quot;com.mysql.cj.jdbc.Driver&quot;);
+        dsc.setUsername(&quot;wxyj&quot;);
+        dsc.setPassword(&quot;123456&quot;);
+        mpg.setDataSource(dsc);
+
+        // 包配置
+        PackageConfig pc = new PackageConfig();
+        pc.setModuleName(scanner(&quot;模块名&quot;));
+        pc.setParent(&quot;com.example&quot;);
+        mpg.setPackageInfo(pc);
+
+        // 自定义配置
+        InjectionConfig cfg = new InjectionConfig() {
+            @Override
+            public void initMap() {
+                // to do nothing
+            }
+        };
+        List&lt;FileOutConfig&gt; focList = new ArrayList&lt;&gt;();
+        focList.add(new FileOutConfig(&quot;/templates/mapper.xml.ftl&quot;) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                // 自定义输入文件名称
+                return projectPath + &quot;/src/main/resources/mapper/&quot; + pc.getModuleName()
+                        + &quot;/&quot; + tableInfo.getEntityName() + &quot;Mapper&quot; + StringPool.DOT_XML;
+            }
+        });
+        cfg.setFileOutConfigList(focList);
+        mpg.setCfg(cfg);
+        mpg.setTemplate(new TemplateConfig().setXml(null));
+
+        // 策略配置
+        StrategyConfig strategy = new StrategyConfig();
+        strategy.setNaming(NamingStrategy.underline_to_camel);
+        strategy.setColumnNaming(NamingStrategy.underline_to_camel);
+        //strategy.setSuperEntityClass(&quot;com.baomidou.ant.common.BaseEntity&quot;);
+        strategy.setEntityLombokModel(true);
+        strategy.setRestControllerStyle(true);
+        //strategy.setSuperControllerClass(&quot;com.baomidou.ant.common.BaseController&quot;);
+        strategy.setInclude(scanner(&quot;表名&quot;));
+        //strategy.setSuperEntityColumns(&quot;id&quot;);
+        strategy.setControllerMappingHyphenStyle(true);
+        strategy.setTablePrefix(&quot;_&quot;);
+        mpg.setStrategy(strategy);
+        mpg.setTemplateEngine(new FreemarkerTemplateEngine());
+        mpg.execute();
+    }
+}
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动" loading="lazy"></figure>
+<p>点击运行，在输入栏按照以下流程执行即可</p>
+<p><img src="https://img-blog.csdnimg.cn/20190926114008477.png" alt="img" loading="lazy"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动" loading="lazy"></p>
+<p>执行后项目结构如下：</p>
+<pre><code class="language-bash">├─src
+│  ├─main
+│  │  ├─java
+│  │  │  └─com
+│  │  │      └─example
+│  │  │          └─mybatisplus
+│  │  │              │  MybatisPlusApplication.java
+│  │  │              │
+│  │  │              ├─config
+│  │  │              │      SwaggerConfig.java
+│  │  │              │
+│  │  │              ├─controller
+│  │  │              │      StudentController.java
+│  │  │              │
+│  │  │              ├─entity
+│  │  │              │      Student.java
+│  │  │              │
+│  │  │              ├─mapper
+│  │  │              │      StudentMapper.java
+│  │  │              │
+│  │  │              └─service
+│  │  │                  │  IStudentService.java
+│  │  │                  │
+│  │  │                  └─impl
+│  │  │                          StudentServiceImpl.java
+│  │  │
+│  │  └─resources
+│  │      │  application.yml
+│  │      │
+│  │      ├─mapper
+│  │      │  └─mybatisplus
+│  │      │          StudentMapper.xml
+│  │      │
+│  │      ├─static
+│  │      └─templates
+│  │              controller-mine.java.ftl
+│  │              entity-mine.java.ftl
+│  │              mapper-mine.java.ftl
+│  │              service-mine.java.ftl
+│  │              serviceImpl-mine.java.ftl
+│  │
+│  └─test
+│      └─java
+│              CodeGenerator.java
+│              CodeGeneratorDefault.java
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动" loading="lazy"></figure>
+<h2 id="自定义模板生成"><strong>自定义模板生成：</strong></h2>
+<blockquote>
+<p>有些小伙伴不满足于默认模板生成的文件，下面我们来演示自定义模板：</p>
+</blockquote>
+<p><strong>1、添加freemarker依赖：</strong></p>
+<pre><code class="language-bash">&lt;dependency&gt;
+    &lt;groupId&gt;org.freemarker&lt;/groupId&gt;
+    &lt;artifactId&gt;freemarker&lt;/artifactId&gt;
+    &lt;version&gt;2.3.23&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动" loading="lazy"></figure>
+<p><strong>2、编写自定义模板：（文末有源码链接）</strong></p>
+<pre><code>controller-mine.java.ftl
+entity-mine.java.ftl
+mapper-mine.java.ftl
+service-mine.java.ftl
+serviceImpl-mine.java.ftl
+</code></pre>
+<figure data-type="image" tabindex="5"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动" loading="lazy"></figure>
+<p><strong>3、修改代码生成器配置：</strong></p>
+<pre><code class="language-java">import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.generator.AutoGenerator;
+import com.baomidou.mybatisplus.generator.InjectionConfig;
+import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.po.TableInfo;
+import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class CodeGenerator {
+
+
+    /**
+     * &lt;p&gt;
+     * 读取控制台内容
+     * &lt;/p&gt;
+     */
+
+    public static String scanner(String tip) {
+        Scanner scanner = new Scanner(System.in);
+        StringBuilder help = new StringBuilder();
+        help.append(&quot;请输入&quot; + tip + &quot;：&quot;);
+        System.out.println(help.toString());
+        if (scanner.hasNext()) {
+            String ipt = scanner.next();
+            if (StringUtils.isNotEmpty(ipt)) {
+                return ipt;
+            }
+        }
+        throw new MybatisPlusException(&quot;请输入正确的&quot; + tip + &quot;！&quot;);
+    }
+
+    public static void main(String[] args) {
+        // 代码生成器
+        AutoGenerator mpg = new AutoGenerator();
+
+        // 全局配置
+        GlobalConfig gc = new GlobalConfig();
+        String projectPath = System.getProperty(&quot;user.dir&quot;);
+        gc.setOutputDir(projectPath + &quot;/src/main/java&quot;);
+        gc.setAuthor(&quot;liuwenxu&quot;);
+        gc.setOpen(false);
+        gc.setSwagger2(true); // 实体属性 Swagger2 注解
+        mpg.setGlobalConfig(gc);
+
+        // 数据源配置
+        DataSourceConfig dsc = new DataSourceConfig();
+        dsc.setUrl(&quot;jdbc:mysql://172.30.7.143:3306/wxyj_sj?serverTimezone=UTC&amp;characterEncoding=utf-8&amp;useSSL=false&quot;);
+        // dsc.setSchemaName(&quot;public&quot;);
+        dsc.setDriverName(&quot;com.mysql.cj.jdbc.Driver&quot;);
+        dsc.setUsername(&quot;wxyj&quot;);
+        dsc.setPassword(&quot;123456&quot;);
+        mpg.setDataSource(dsc);
+
+        // 包配置
+        PackageConfig pc = new PackageConfig();
+        pc.setModuleName(scanner(&quot;模块名&quot;));
+        pc.setParent(&quot;com.example&quot;);
+        mpg.setPackageInfo(pc);
+
+        // 自定义配置
+        InjectionConfig cfg = new InjectionConfig() {
+            @Override
+            public void initMap() {
+                // to do nothing
+            }
+        };
+        List&lt;FileOutConfig&gt; focList = new ArrayList&lt;&gt;();
+        focList.add(new FileOutConfig(&quot;/templates/mapper.xml.ftl&quot;) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                // 自定义输入文件名称
+                return projectPath + &quot;/src/main/resources/mapper/&quot; + pc.getModuleName()
+                        + &quot;/&quot; + tableInfo.getEntityName() + &quot;Mapper&quot; + StringPool.DOT_XML;
+            }
+        });
+        cfg.setFileOutConfigList(focList);
+        mpg.setCfg(cfg);
+
+        // 配置模板
+        TemplateConfig templateConfig = new TemplateConfig();
+
+        // 配置自定义输出模板
+        //指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
+        templateConfig.setEntity(&quot;templates/entity-mine.java&quot;);
+        templateConfig.setMapper(&quot;templates/mapper-mine.java&quot;);
+        templateConfig.setService(&quot;templates/service-mine.java&quot;);
+        templateConfig.setServiceImpl(&quot;templates/serviceImpl-mine.java&quot;);
+        templateConfig.setController(&quot;templates/controller-mine.java&quot;);
+        templateConfig.setXml(null);
+        mpg.setTemplate(templateConfig);
+
+        // 策略配置
+        StrategyConfig strategy = new StrategyConfig();
+        strategy.setNaming(NamingStrategy.underline_to_camel);
+        strategy.setColumnNaming(NamingStrategy.underline_to_camel);
+        //strategy.setSuperEntityClass(&quot;com.baomidou.ant.common.BaseEntity&quot;);
+        strategy.setEntityLombokModel(true);
+        strategy.setRestControllerStyle(true);
+        //strategy.setSuperControllerClass(&quot;com.baomidou.ant.common.BaseController&quot;);
+        strategy.setInclude(scanner(&quot;表名&quot;));
+        //strategy.setSuperEntityColumns(&quot;id&quot;);
+        strategy.setControllerMappingHyphenStyle(true);
+        strategy.setTablePrefix(&quot;_&quot;);
+        mpg.setStrategy(strategy);
+        mpg.setTemplateEngine(new FreemarkerTemplateEngine());
+        mpg.execute();
+    }
+}
+</code></pre>
+<figure data-type="image" tabindex="6"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动" loading="lazy"></figure>
+<h2 id="附项目源码">附：<a href="https://github.com/RookieXv/mybatis-plus">项目源码</a></h2>
+
+<span id="footnote"></span>
+<div id = "warn"></div>
+</div>
+<div class="toc-container"><ul class="markdownIt-TOC">
+<li><a href="#%E4%B8%80-%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E5%99%A8">一、配置代码生成器</a>
+<ul>
+<li><a href="#%E9%BB%98%E8%AE%A4%E6%A8%A1%E6%9D%BF%E7%94%9F%E6%88%90"><strong>默认模板生成：</strong></a></li>
+<li><a href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A8%A1%E6%9D%BF%E7%94%9F%E6%88%90"><strong>自定义模板生成：</strong></a></li>
+<li><a href="#%E9%99%84%E9%A1%B9%E7%9B%AE%E6%BA%90%E7%A0%81">附：项目源码</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="fullPage"><canvas id="canvas"></canvas></div>
+</article>
+<div id="eof"><span>EOF</span></div><div class="round-shape-one"></div>
+<section>
+<div class="doc_comments">
+
+	  
+		<div id="gitalk-container"></div>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/qyxtim/Static@3.8/gitalk.min.js"></script><link href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.css"rel="stylesheet"><script>var gitalk=new Gitalk({clientID:"d00afcd1f2dedc5fd8bb",clientSecret:"cda01edc3ebd02b212a0a92ad9a893184f9a9955",repo:"RookieXv.github.io",owner:"RookieXv",admin:["RookieXv"],id:(location.pathname).substring(0, 49),distractionFreeMode:false});gitalk.render("gitalk-container");</script>
+	  
+		  
+	  
+
+</div></section>
+</div></div></div><script>
+"use strict";!function(){for(var n=document.getElementsByTagName("pre"),e=n.length,s=0;s<e;s++){n[s].innerHTML='<span class="line-number"></span>'+n[s].innerHTML+'<span class="cl"></span>';for(var a=n[s].innerHTML.split(/\n/).length,r=0;r<a-1;r++){n[s].getElementsByTagName("span")[0].innerHTML+="<span>"+(r+1)+"</span>"}}}();
+let mainNavLinks=document.querySelectorAll(".markdownIt-TOC a");window.addEventListener("scroll",event=>{let fromTop=window.scrollY;mainNavLinks.forEach((link,index)=>{let section=document.getElementById(decodeURI(link.hash).substring(1));let nextSection=null
+if(mainNavLinks[index+1]){nextSection=document.getElementById(decodeURI(mainNavLinks[index+1].hash).substring(1));}
+if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop){link.classList.add("currentToc");}else{link.classList.remove("currentToc");}}else{link.classList.add("currentToc");}}else{link.classList.remove("currentToc");}});});
+var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
+var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
+var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
+content="本文最后更新于2019-09-28 18:38:17，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2019-09-28 18:38:17";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+</script>
+<style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
+<a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"></div></div><div class="copyright"id="copyright">Powered by<a href="https://liuwenxu.com" target="_blank">Liu Wenxu</a>Copyright © 2018-2020 <a href="https://RookieXv.github.io" style="margin:0;">Java那些事儿</a>.</div>
+<span style="display: inline;margin-right:15px;">👁<strong><span id="busuanzi_value_site_uv"></span></strong></span><span id="busuanzi_container_page_pv" style="display: inline;"><span>📚<strong>5</strong> posts</span></div></div>
+<script>
+console.log("\n %c \u26a1Theme: Bitcron-pro Author's Blog:https://blog.blinkstar.cn  Writen By Serence  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;", );
+</script>
+<script src="https://cdn.jsdelivr.net/npm/instant.page@3.0.0/instantpage.min.js" type="module" defer></script>
+<script type="text/javascript" async src="https://RookieXv.github.io/media/js/prism.js"></script>
+</body>
+</html>
