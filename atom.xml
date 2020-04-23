@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://liuwenxu.com</id>
     <title>Java那些事儿</title>
-    <updated>2020-04-23T08:51:38.483Z</updated>
+    <updated>2020-04-23T08:53:11.585Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://liuwenxu.com"/>
     <link rel="self" href="https://liuwenxu.com/atom.xml"/>
@@ -12,65 +12,6 @@
     <logo>https://liuwenxu.com/images/avatar.png</logo>
     <icon>https://liuwenxu.com/favicon.ico</icon>
     <rights>All rights reserved 2020, Java那些事儿</rights>
-    <entry>
-        <title type="html"><![CDATA[ 你还在github上这样看代码吗？]]></title>
-        <id>https://liuwenxu.com/-nXBsGAlL/</id>
-        <link href="https://liuwenxu.com/-nXBsGAlL/">
-        </link>
-        <updated>2020-03-28T11:39:37.000Z</updated>
-        <content type="html"><![CDATA[<center>
-一般情况下
-<p>当我们在github看到一个好的项目时</p>
-<p>你可能会这样做</p>
-<figure data-type="image" tabindex="1"><img src="https://mmbiz.qpic.cn/mmbiz_gif/BWyyXjDTMmlhDBK0bkRVI2ibU6eJgOIqHU52cXxqX6pPGl4Evk3NWN1oPGPqD75ic1GI83cYmrvEFFmIWLFUuczg/?wx_fmt=gif" alt="img" loading="lazy"></figure>
-<p>你会发现</p>
-<p>这样一个文件一个文件的寻找</p>
-<p>是非常慢的</p>
-<figure data-type="image" tabindex="2"><img src="https://mmbiz.qpic.cn/mmbiz_png/BWyyXjDTMmlhDBK0bkRVI2ibU6eJgOIqH0SZuicASNJnB4UgrbiaB5ciblzW68eVRUxrWkYfnRGblViaVCCyN3RAOCw/?wx_fmt=gif" alt="img" loading="lazy"></figure>
-<p>这个时候，聪明的你就会想</p>
-<p>要是能像idea一样</p>
-<p>层级显示该多好啊</p>
-<p>于是</p>
-<p>...</p>
-<figure data-type="image" tabindex="3"><img src="https://mmbiz.qpic.cn/mmbiz_gif/BWyyXjDTMmlhDBK0bkRVI2ibU6eJgOIqHnzfUCS5NQealQZkus0MJsM5144Zv2Lsx5uCoBd1KJbprTx1ExStnsA/?wx_fmt=gif" alt="img" loading="lazy"></figure>
-<figure data-type="image" tabindex="4"><img src="https://mmbiz.qpic.cn/mmbiz_gif/BWyyXjDTMmlhDBK0bkRVI2ibU6eJgOIqHWNoy2FSauVzuwIRL7yVLjegxLggovADxJTe9V8BrEkEaAdeSgeQAVA/?wx_fmt=gif" alt="img" loading="lazy"></figure>
-<p>有这么一个工具，你所想的它都能帮你解决</p>
-<p>Chrome 的这个 Github 插件</p>
-<p>让你瞬间爱上它</p>
-<p>这个插件的名字叫 <strong>Sourcegraph</strong></p>
-<figure data-type="image" tabindex="5"><img src="https://mmbiz.qpic.cn/mmbiz_png/BWyyXjDTMmlhDBK0bkRVI2ibU6eJgOIqHhemD2vibBuncnQIHBHAlNFssPtIJrrDFHcXcDWrgWGgQ7NN2RllMLhg/?wx_fmt=png" alt="img" loading="lazy"></figure>
-<p>在Chrome商店安装之后</p>
-<p>再次打开github项目，你就会发现多了一个<img width = '15' height ='15' src ="https://mmbiz.qpic.cn/mmbiz_svg/vsACyXq1DBiayvNnJkib8I5upcMDDpHwzvbOLFxI0w21J72PAEnwtic8ElRUWibkYp4Mia9GXAqMJMguw8crUWsLTo5s7REqSicOeP/?wx_fmt=svg"/>图标</p>
-<p><strong>点击它</strong></p>
-<p>没错，就是点击它</p>
-<p>然后你会发现你的github项目就变成了这样 ↓</p>
-<figure data-type="image" tabindex="6"><img src="https://mmbiz.qpic.cn/mmbiz_gif/BWyyXjDTMmlhDBK0bkRVI2ibU6eJgOIqHfzaiaGyTzpWO9h7xGiakvfXaUibY25y6NKdA6Ta4LjNLQDRoLpkpXryLA/?wx_fmt=gif" alt="img" loading="lazy"></figure>
-<p>你可以在左边像idea一样</p>
-<p>操作它</p>
-<p>妈妈再也不用担心找不到代码了</p>
-<figure data-type="image" tabindex="7"><img src="https://mmbiz.qpic.cn/mmbiz_gif/BWyyXjDTMmlhDBK0bkRVI2ibU6eJgOIqHnLhvictIJOdIC6cHIdCyFtYlyC5uVicTKPMZNxrJaRhwgVdQpxiaIGAew/?wx_fmt=gif" alt="img" loading="lazy"></figure>
-<p>你还可以在上方的搜索框进行 <strong>文件搜索↓</strong></p>
-<figure data-type="image" tabindex="8"><img src="https://mmbiz.qpic.cn/mmbiz_png/BWyyXjDTMmlhDBK0bkRVI2ibU6eJgOIqHYlpBoAHWWotmH4SU8v7iapuo6t4I2Ar5mvX8TPh7LkcvOCmC42C94yw/?wx_fmt=png" alt="img" loading="lazy"></figure>
-<p>当然，</p>
-<p>你还可以这样 ↓</p>
-<figure data-type="image" tabindex="9"><img src="https://mmbiz.qpic.cn/mmbiz_gif/BWyyXjDTMmlhDBK0bkRVI2ibU6eJgOIqH8503r25ZZ6DSIorxvzIubgvMu67jicqukcZCwLHbAeuPDWiaC49ATU2w/?wx_fmt=gif" alt="img" loading="lazy"></figure>
-<p>想不到吧，还能进行 <strong>方法跳转</strong></p>
-<p>简直完全还原idea啊~**<br>
-**</p>
-<figure data-type="image" tabindex="10"><img src="https://mmbiz.qpic.cn/mmbiz_jpg/BWyyXjDTMmlhDBK0bkRVI2ibU6eJgOIqH7tiapDzic4QNh3Sf6yFv5xNic6jjcJYS8DFZGbia8yqpED1p6WSZ6gNjYQ/?wx_fmt=jpeg" alt="img" loading="lazy"></figure>
-<p>除此之外</p>
-<p>它还可以显示 <strong>提交记录</strong>、单独 <strong>下载文件↓</strong></p>
-<figure data-type="image" tabindex="11"><img src="https://mmbiz.qpic.cn/mmbiz_gif/BWyyXjDTMmlhDBK0bkRVI2ibU6eJgOIqH4oS1QeELvHNR5iaJ65dfvv5UGfrVpwmhyY1nLOfMubjALVjianx8NNmg/?wx_fmt=gif" alt="img" loading="lazy"></figure>
-<p>它还可以下载多种 <strong>插件</strong>↓</p>
-<figure data-type="image" tabindex="12"><img src="https://mmbiz.qpic.cn/mmbiz_gif/BWyyXjDTMmlhDBK0bkRVI2ibU6eJgOIqHB1ibOpe8JYQyNdzsm542ByHqzzgDSX9cmIUQAEnjZoMiazLbLcqUSwUg/?wx_fmt=gif" alt="img" loading="lazy"></figure>
-<p>怎么样？</p>
-<p>是不是就两个字</p>
-<figure data-type="image" tabindex="13"><img src="https://mmbiz.qpic.cn/mmbiz_jpg/BWyyXjDTMmlhDBK0bkRVI2ibU6eJgOIqHib1VPY7jYVK9b1Jl6JhicpicGA2Nic44z0nXDwuyMJ8mlKAepNqPkvaa5w/?wx_fmt=jpeg" alt="img" loading="lazy"></figure>
-<p>它，远远还不止这些</p>
-<p>更多功能还需要你亲自去发现！</p>
-</center>
-]]></content>
-    </entry>
     <entry>
         <title type="html"><![CDATA[自定义Spring Boot启动图案]]></title>
         <id>https://liuwenxu.com/LFImdFTEW/</id>
