@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://liuwenxu.com</id>
     <title>Java那些事儿</title>
-    <updated>2020-04-22T10:21:16.990Z</updated>
+    <updated>2020-04-23T08:50:18.690Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://liuwenxu.com"/>
     <link rel="self" href="https://liuwenxu.com/atom.xml"/>
@@ -12,6 +12,314 @@
     <logo>https://liuwenxu.com/images/avatar.png</logo>
     <icon>https://liuwenxu.com/favicon.ico</icon>
     <rights>All rights reserved 2020, Java那些事儿</rights>
+    <entry>
+        <title type="html"><![CDATA[ 你还在github上这样看代码吗？]]></title>
+        <id>https://liuwenxu.com/-nXBsGAlL/</id>
+        <link href="https://liuwenxu.com/-nXBsGAlL/">
+        </link>
+        <updated>2020-03-28T11:39:37.000Z</updated>
+        <content type="html"><![CDATA[<center>
+一般情况下
+<p>当我们在github看到一个好的项目时</p>
+<p>你可能会这样做</p>
+<figure data-type="image" tabindex="1"><img src="https://mmbiz.qpic.cn/mmbiz_gif/BWyyXjDTMmlhDBK0bkRVI2ibU6eJgOIqHU52cXxqX6pPGl4Evk3NWN1oPGPqD75ic1GI83cYmrvEFFmIWLFUuczg/?wx_fmt=gif" alt="img" loading="lazy"></figure>
+<p>你会发现</p>
+<p>这样一个文件一个文件的寻找</p>
+<p>是非常慢的</p>
+<figure data-type="image" tabindex="2"><img src="https://mmbiz.qpic.cn/mmbiz_png/BWyyXjDTMmlhDBK0bkRVI2ibU6eJgOIqH0SZuicASNJnB4UgrbiaB5ciblzW68eVRUxrWkYfnRGblViaVCCyN3RAOCw/?wx_fmt=gif" alt="img" loading="lazy"></figure>
+<p>这个时候，聪明的你就会想</p>
+<p>要是能像idea一样</p>
+<p>层级显示该多好啊</p>
+<p>于是</p>
+<p>...</p>
+<figure data-type="image" tabindex="3"><img src="https://mmbiz.qpic.cn/mmbiz_gif/BWyyXjDTMmlhDBK0bkRVI2ibU6eJgOIqHnzfUCS5NQealQZkus0MJsM5144Zv2Lsx5uCoBd1KJbprTx1ExStnsA/?wx_fmt=gif" alt="img" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://mmbiz.qpic.cn/mmbiz_gif/BWyyXjDTMmlhDBK0bkRVI2ibU6eJgOIqHWNoy2FSauVzuwIRL7yVLjegxLggovADxJTe9V8BrEkEaAdeSgeQAVA/?wx_fmt=gif" alt="img" loading="lazy"></figure>
+<p>有这么一个工具，你所想的它都能帮你解决</p>
+<p>Chrome 的这个 Github 插件</p>
+<p>让你瞬间爱上它</p>
+<p>这个插件的名字叫 <strong>Sourcegraph</strong></p>
+<figure data-type="image" tabindex="5"><img src="https://mmbiz.qpic.cn/mmbiz_png/BWyyXjDTMmlhDBK0bkRVI2ibU6eJgOIqHhemD2vibBuncnQIHBHAlNFssPtIJrrDFHcXcDWrgWGgQ7NN2RllMLhg/?wx_fmt=png" alt="img" loading="lazy"></figure>
+<p>在Chrome商店安装之后</p>
+<p>再次打开github项目，你就会发现多了一个<img width = '15' height ='15' src ="https://mmbiz.qpic.cn/mmbiz_svg/vsACyXq1DBiayvNnJkib8I5upcMDDpHwzvbOLFxI0w21J72PAEnwtic8ElRUWibkYp4Mia9GXAqMJMguw8crUWsLTo5s7REqSicOeP/?wx_fmt=svg"/>图标</p>
+<p><strong>点击它</strong></p>
+<p>没错，就是点击它</p>
+<p>然后你会发现你的github项目就变成了这样 ↓</p>
+<figure data-type="image" tabindex="6"><img src="https://mmbiz.qpic.cn/mmbiz_gif/BWyyXjDTMmlhDBK0bkRVI2ibU6eJgOIqHfzaiaGyTzpWO9h7xGiakvfXaUibY25y6NKdA6Ta4LjNLQDRoLpkpXryLA/?wx_fmt=gif" alt="img" loading="lazy"></figure>
+<p>你可以在左边像idea一样</p>
+<p>操作它</p>
+<p>妈妈再也不用担心找不到代码了</p>
+<figure data-type="image" tabindex="7"><img src="https://mmbiz.qpic.cn/mmbiz_gif/BWyyXjDTMmlhDBK0bkRVI2ibU6eJgOIqHnLhvictIJOdIC6cHIdCyFtYlyC5uVicTKPMZNxrJaRhwgVdQpxiaIGAew/?wx_fmt=gif" alt="img" loading="lazy"></figure>
+<p>你还可以在上方的搜索框进行 <strong>文件搜索↓</strong></p>
+<figure data-type="image" tabindex="8"><img src="https://mmbiz.qpic.cn/mmbiz_png/BWyyXjDTMmlhDBK0bkRVI2ibU6eJgOIqHYlpBoAHWWotmH4SU8v7iapuo6t4I2Ar5mvX8TPh7LkcvOCmC42C94yw/?wx_fmt=png" alt="img" loading="lazy"></figure>
+<p>当然，</p>
+<p>你还可以这样 ↓</p>
+<figure data-type="image" tabindex="9"><img src="https://mmbiz.qpic.cn/mmbiz_gif/BWyyXjDTMmlhDBK0bkRVI2ibU6eJgOIqH8503r25ZZ6DSIorxvzIubgvMu67jicqukcZCwLHbAeuPDWiaC49ATU2w/?wx_fmt=gif" alt="img" loading="lazy"></figure>
+<p>想不到吧，还能进行 <strong>方法跳转</strong></p>
+<p>简直完全还原idea啊~**<br>
+**</p>
+<figure data-type="image" tabindex="10"><img src="https://mmbiz.qpic.cn/mmbiz_jpg/BWyyXjDTMmlhDBK0bkRVI2ibU6eJgOIqH7tiapDzic4QNh3Sf6yFv5xNic6jjcJYS8DFZGbia8yqpED1p6WSZ6gNjYQ/?wx_fmt=jpeg" alt="img" loading="lazy"></figure>
+<p>除此之外</p>
+<p>它还可以显示 <strong>提交记录</strong>、单独 <strong>下载文件↓</strong></p>
+<figure data-type="image" tabindex="11"><img src="https://mmbiz.qpic.cn/mmbiz_gif/BWyyXjDTMmlhDBK0bkRVI2ibU6eJgOIqH4oS1QeELvHNR5iaJ65dfvv5UGfrVpwmhyY1nLOfMubjALVjianx8NNmg/?wx_fmt=gif" alt="img" loading="lazy"></figure>
+<p>它还可以下载多种 <strong>插件</strong>↓</p>
+<figure data-type="image" tabindex="12"><img src="https://mmbiz.qpic.cn/mmbiz_gif/BWyyXjDTMmlhDBK0bkRVI2ibU6eJgOIqHB1ibOpe8JYQyNdzsm542ByHqzzgDSX9cmIUQAEnjZoMiazLbLcqUSwUg/?wx_fmt=gif" alt="img" loading="lazy"></figure>
+<p>怎么样？</p>
+<p>是不是就两个字</p>
+<figure data-type="image" tabindex="13"><img src="https://mmbiz.qpic.cn/mmbiz_jpg/BWyyXjDTMmlhDBK0bkRVI2ibU6eJgOIqHib1VPY7jYVK9b1Jl6JhicpicGA2Nic44z0nXDwuyMJ8mlKAepNqPkvaa5w/?wx_fmt=jpeg" alt="img" loading="lazy"></figure>
+<p>它，远远还不止这些</p>
+<p>更多功能还需要你亲自去发现！</p>
+</center>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[自定义Spring Boot启动图案]]></title>
+        <id>https://liuwenxu.com/LFImdFTEW/</id>
+        <link href="https://liuwenxu.com/LFImdFTEW/">
+        </link>
+        <updated>2020-03-24T08:26:48.000Z</updated>
+        <content type="html"><![CDATA[<p>在<code>resources</code>目录下，新建<code>banner.txt</code>，将下面内容拷贝进去，重新启动即可</p>
+<pre><code class="language-java">${AnsiColor.BRIGHT_YELLOW}
+                                           _ooAoo_
+                                          o9999999o
+                                          88&quot; . &quot;88
+                                          (| -_- |)
+                                          O\  =  /O
+                                       ____/`---'\____
+                                     .'  \\|     |//  `.
+                                    /  \\|||  :  |||//  \
+                                   /  _||||| -:- |||||-  \
+                                   |   | \\\  -  /// |   |
+                                   | \_|  ''\---/''  |   |
+                                   \  .-\__  `-`  ___/-. /
+                                 ___`. .'  /--.--\  `. . __
+                              .&quot;&quot; '&lt;  `.___\_&lt;|&gt;_/___.'  &gt;'&quot;&quot;.
+                             | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+                             \  \ `-.   \_ __\ /__ _/   .-` /  /
+                        ======`-.____`-.___\_____/___.-`____.-'======
+                                           `=---='
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                   佛祖保佑       永无BUG
+                    ${AnsiColor.BRIGHT_CYAN}
+                    Application Version: ${application.version}${application.formatted-version}
+                    Spring Boot Version: ${spring-boot.version}${spring-boot.formatted-version}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[生成项目目录树]]></title>
+        <id>https://liuwenxu.com/wZp6XlKZp/</id>
+        <link href="https://liuwenxu.com/wZp6XlKZp/">
+        </link>
+        <updated>2020-03-24T08:20:48.000Z</updated>
+        <content type="html"><![CDATA[<p>我们在写博客时，经常看到大佬们会把项目的结构以下面的形式画出来</p>
+<pre><code class="language-bash">├─src
+│  ├─main
+│  │  ├─java
+│  │  │  └─com
+│  │  │      └─example
+│  │  │          └─mybatisplus
+│  │  │              ├─config
+│  │  │              ├─controller
+│  │  │              ├─entity
+│  │  │              ├─mapper
+│  │  │              └─service
+│  │  │                  └─impl
+│  │  └─resources
+│  │      ├─mapper
+│  │      │  └─mybatisplus
+│  │      ├─static
+│  │      └─templates
+│  └─test
+│      └─java
+└─target
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动" loading="lazy"></figure>
+<p>那么我们该怎么像大佬一样优秀呢？其实很简单，我们可以使用windows自带的 <strong>tree</strong> 命令。</p>
+<p>其实tree命令 是一个很不错的功能。可以把指定文件夹的所以文件用树状罗列出来。然后我们查看树状结构就能够了解有那些文件，然后我们在去查看需要关心的有那些文件就可以了。</p>
+<p>用法：TREE [d:][path1] [/A][/F] &gt; [d:][path2/pro_tree.txt]</p>
+<p>​            ↓             ↓           ↓    ↓                     ↓</p>
+<p>解读：命令   项目路径   符号 文件   生成的<code>tree</code>保存到文件</p>
+<p>我们按 <em>win</em>+R 键,输入cmd，进入黑窗口，选择进入我们要生成目录树的目录下，输入</p>
+<pre><code class="language-bash">tree /F
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动" loading="lazy"></figure>
+<p>即可生成具体的文件的目录树，如果只想具体的文件夹，则直接输入<code>tree</code>。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[数据库COUNT(*)、COUNT(字段)和COUNT(1)的异同]]></title>
+        <id>https://liuwenxu.com/cxOh2oJTM/</id>
+        <link href="https://liuwenxu.com/cxOh2oJTM/">
+        </link>
+        <updated>2020-03-23T08:15:41.000Z</updated>
+        <content type="html"><![CDATA[<blockquote>
+<p>在数据库的增删改查操作中，使用最频繁的就是查询操作。而在所有查询操作中，统计数量操作更是经常被用到。</p>
+<p>关于数据库中行数统计，无论是MySQL还是Oracle，都有一个函数可以使用，那就是<code>COUNT</code>。</p>
+</blockquote>
+<h3 id="count">COUNT</h3>
+<p>MySQL官网给出的解释是：</p>
+<p>1、COUNT(expr) ，返回SELECT语句检索的行中expr的值不为NULL的数量。结果是一个BIGINT值。</p>
+<p>2、如果查询结果没有命中任何记录，则返回0</p>
+<p>3、但是，值得注意的是，<code>COUNT(*)</code> 的统计结果中，会包含值为NULL的行数。</p>
+<p>例如：</p>
+<pre><code class="language-sql">create table #bla(id int,age int)
+insert #student values(null,null)
+insert #student values(1,null)
+insert #student values(null,1)
+insert #student values(1,null)
+insert #student values(null,1)
+insert #student values(1,null)
+insert #student values(null,null)
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动" loading="lazy"></figure>
+<p>使用语句count(*),count(id),count(id2)查询结果如下：</p>
+<pre><code class="language-sql">select count(*),count(id),count(age)
+from #student
+results 7 3 2
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动" loading="lazy"></figure>
+<p><strong><code>COUNT(常量)</code> 和 <code>COUNT(\*)</code>表示的是直接查询符合条件的数据库表的行数。而<code>COUNT(列名)</code>表示的是查询符合条件的列的值不为NULL的行数。</strong></p>
+<p><strong>而COUNT(*)是SQL92定义的标准统计行数的语法，因为他是标准语法，所以MySQL数据库对他进行过很多优化。</strong></p>
+<blockquote>
+<p>SQL92，是数据库的一个ANSI/ISO标准。它定义了一种语言（SQL）以及数据库的行为（事务、隔离级别等）。</p>
+</blockquote>
+<h3 id="count的优化">COUNT(*)的优化</h3>
+<p>区分不同的执行引擎，MySQL中比较常用的执行引擎就是InnoDB和MyISAM。</p>
+<p>MyISAM和InnoDB有很多区别，其中有一个关键的区别和我们接下来要介绍的COUNT(*)有关，那就是MyISAM不支持事务，MyISAM中的锁是表级锁；而InnoDB支持事务，并且支持行级锁。</p>
+<p><strong><code>MyISAM</code>做了一个简单的优化，那就是它可以把表的总行数单独记录下来，如果从一张表中使用COUNT(*)进行查询的时候，可以直接返回这个记录下来的数值就可以了，当然，前提是不能有where条件。</strong></p>
+<p><strong><code>InnoDB</code>中索引分为聚簇索引（主键索引）和非聚簇索引（非主键索引），聚簇索引的叶子节点中保存的是整行记录，而非聚簇索引的叶子节点中保存的是该行记录的主键的值。</strong></p>
+<p><strong>所以，相比之下，非聚簇索引要比聚簇索引小很多，所以MySQL会优先选择最小的非聚簇索引来扫表。所以，当我们建表的时候，除了主键索引以外，创建一个非主键索引还是有必要的。</strong></p>
+<p>至此，我们介绍完了MySQL数据库对于COUNT(*)的优化，这些优化的前提都是查询语句中不包含WHERE以及GROUP BY条件。</p>
+<h3 id="count1"><strong>COUNT(1)</strong></h3>
+<blockquote>
+<p>InnoDB handles SELECT COUNT(*) and SELECT COUNT(1) operations in the same way. There is no performance difference.</p>
+</blockquote>
+<p><strong>所以，对于COUNT(1)和COUNT(*)，MySQL的优化是完全一样的，根本不存在谁比谁快！</strong></p>
+<p>建议使用<code>COUNT(*)</code>！因为这个是SQL92定义的标准统计行数的语法，而且本文只是基于MySQL做了分析，关于Oracle中的这个问题，也是众说纷纭的呢。</p>
+<h3 id="count字段">COUNT(字段)</h3>
+<p>最后，就是我们一直还没提到的COUNT(字段)，他的查询就比较简单粗暴了，就是进行全表扫描，然后判断指定字段的值是不是为NULL，不为NULL则累加。</p>
+<p>相比<code>COUNT(*)</code>，<code>COUNT(字段)</code>多了一个步骤就是判断所查询的字段是否为NULL，所以他的性能要比<code>COUNT(*)</code>慢。</p>
+<h3 id="总结">总结</h3>
+<p>本文介绍了COUNT函数的用法，主要用于统计表行数。主要用法有COUNT(*)、COUNT(字段)和COUNT(1)。</p>
+<p>因为COUNT(<em>)是SQL92定义的标准统计行数的语法，所以MySQL对他进行了很多优化，<code>MyISAM</code>中会直接把表的总行数单独记录下来供COUNT(</em>)查询，而InnoDB则会在扫表的时候选择最小的索引来降低成本。当然，这些优化的前提都是没有进行where和group的条件查询。</p>
+<p>在<code>InnoDB</code>中COUNT(*)和COUNT(1)实现上没有区别，而且效率一样，但是COUNT(字段)需要进行字段的非NULL判断，所以效率会低一些。</p>
+<p>因为COUNT(<em>)是SQL92定义的标准统计行数的语法，并且效率高，所以请直接使用COUNT(</em>)查询表的行数！</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[MySQL是否允许在唯一索引字段中添加多个NULL值]]></title>
+        <id>https://liuwenxu.com/mysql-null-unique/</id>
+        <link href="https://liuwenxu.com/mysql-null-unique/">
+        </link>
+        <updated>2020-03-16T15:59:59.000Z</updated>
+        <content type="html"><![CDATA[<blockquote>
+<p>今天正在吃饭，一个朋友提出了一个他面试中遇到的问题，<code>MySQL允许在唯一索引字段中添加多个NULL值</code>。</p>
+<p>这个问题对于我一个非专业DBA来说，也没特地去验证过，所以正好借此机会验证一下，做个记录：</p>
+</blockquote>
+<h1 id="1-测试环境">1 测试环境：</h1>
+<pre><code class="language-sql">数据库：MySQL5.7.25
+数据库引擎：InnoDB
+连接工具：Navicat Premium
+</code></pre>
+<h1 id="2-建库建表">2 建库，建表</h1>
+<p>首先，创建数据库，并创建测试表 test：</p>
+<pre><code class="language-sql">DROP TABLE IF EXISTS `test`;
+CREATE TABLE `test`  (
+  `id` int(11) NOT NULL COMMENT 'ID',
+  `name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL COMMENT '姓名',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+</code></pre>
+<h1 id="3-添加唯一索引">3 添加唯一索引</h1>
+<p>然后，我们给name字段添加一个唯一索引：</p>
+<pre><code class="language-sql">ALTER TABLE `test` ADD UNIQUE ( `name`);
+</code></pre>
+<h1 id="4-插入测试数据">4 插入测试数据</h1>
+<p>最后，我们尝试插入两条name字段为null的数据：</p>
+<pre><code class="language-sql">INSERT INTO `test` VALUES (1, NULL);
+INSERT INTO `test` VALUES (2, NULL);
+</code></pre>
+<h1 id="5-结果">5 结果</h1>
+<p>并没有报错，说明<strong>MySQL允许在唯一索引字段中添加多个NULL值</strong>。</p>
+<p>数据表如下：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200316234832732.png" alt="img" loading="lazy"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动" loading="lazy"></p>
+<h1 id="6-解释">6 解释</h1>
+<h2 id="61-官方解释">6.1 官方解释</h2>
+<p>MySQL的官方文档给出的解释为：</p>
+<blockquote>
+<p>A UNIQUE index creates a constraint such that all values in the index must be distinct. An error occurs if you try to add a new row with a key value that matches an existing row. <font color=red><strong>This constraint does not apply to NULL values except for the BDB storage engine. For other engines, a UNIQUE index allows multiple NULL values for columns that can contain NULL.</strong></font></p>
+</blockquote>
+<p>我们可以看出，此约束不适用于除BDB存储引擎之外的空值。对于其他引擎，唯一索引允许包含空值的列有多个空值。</p>
+<h2 id="62-网友解释">6.2 网友解释</h2>
+<p>网友给出的解释为：</p>
+<blockquote>
+<p>在sql server中，唯一索引字段不能出现多个null值</p>
+<p>在mysql 的innodb引擎中，是允许在唯一索引的字段中出现多个null值的。</p>
+<p>根据NULL的定义，<font color=red><strong>NULL表示的是未知，因此两个NULL比较的结果既不相等，也不不等，结果仍然是未知。</strong></font>根据这个定义，多个NULL值的存在应该不违反唯一约束，所以是合理的，在oracel也是如此。</p>
+</blockquote>
+<p>这个解释很形象，<u>既不相等，也不不等，所以结果未知。</u></p>
+<p>至于，sqlserver和MySQL其他引擎还有待验证。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[java中获取类加载路径和项目根路径的5种方法]]></title>
+        <id>https://liuwenxu.com/java-dvsdsd/</id>
+        <link href="https://liuwenxu.com/java-dvsdsd/">
+        </link>
+        <updated>2019-11-14T09:28:36.000Z</updated>
+        <content type="html"><![CDATA[<pre><code class="language-java"> import java.io.File;
+ import java.io.IOException;
+ import java.net.URL;
+ 
+ public class MyUrlDemo {
+ 
+     
+     public static void main(String[] args) {
+         MyUrlDemo muDemo = new MyUrlDemo();
+         try {
+             muDemo.showURL();
+         } catch (IOException e) {
+             // TODO Auto-generated catch block
+             e.printStackTrace();
+         }
+     }
+ 
+     public void showURL() throws IOException {
+ 
+         // 第一种：获取类加载的根路径   D:\git\daotie\daotie\target\classes
+         File f = new File(this.getClass().getResource(&quot;/&quot;).getPath());
+         System.out.println(f);
+ 
+         // 获取当前类的所在工程路径; 如果不加“/”  获取当前类的加载目录  D:\git\daotie\daotie\target\classes\my
+         File f2 = new File(this.getClass().getResource(&quot;&quot;).getPath());
+         System.out.println(f2);
+ 
+         // 第二种：获取项目路径    D:\git\daotie\daotie
+         File directory = new File(&quot;&quot;);// 参数为空
+         String courseFile = directory.getCanonicalPath();
+         System.out.println(courseFile);
+ 
+ 
+         // 第三种：  file:/D:/git/daotie/daotie/target/classes/
+         URL xmlpath = this.getClass().getClassLoader().getResource(&quot;&quot;);
+         System.out.println(xmlpath);
+ 
+ 
+         // 第四种： D:\git\daotie\daotie
+         System.out.println(System.getProperty(&quot;user.dir&quot;));
+         /*
+          * 结果： C:\Documents and Settings\Administrator\workspace\projectName
+          * 获取当前工程路径
+          */
+ 
+         // 第五种：  获取所有的类路径 包括jar包的路径
+         System.out.println(System.getProperty(&quot;java.class.path&quot;));
+ 
+     }
+ }
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[（三）Mybatis-Plus代码生成器]]></title>
         <id>https://liuwenxu.com/mybatis-plus-3/</id>
