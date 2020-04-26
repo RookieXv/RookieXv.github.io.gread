@@ -10,7 +10,7 @@
 记录一些&lt;br /&gt;&lt;br /&gt;
 编程知识、生活琐碎~">
 <meta name="theme-color" content="#000">
-<title>Hello Gridea | Java那些事儿</title>
+<title>获取指定时间内指定星期几的所有日期 | Java那些事儿</title>
 <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/RookieXv/RookieXv.github.io@master/favicon.ico?v=1587920361643">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/RookieXv/RookieXv.github.io@master/styles/main.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/RookieXv/RookieXv.github.io@master/media/css/gemini.css">
@@ -41,8 +41,8 @@
   })();
 </script>
 
-  <meta name="description" content="Hello Gridea" />
-  <meta name="keywords" content="Gridea" />
+  <meta name="description" content="获取指定时间内指定星期几的所有日期" />
+  <meta name="keywords" content="星期,日期" />
 </head>
 
 <body>
@@ -263,11 +263,16 @@
   <div class="toc-wrapper auto-number auto"
     id="toc_wrapper">
     <ul class="markdownIt-TOC">
-<li>
+<li><a href="#%E4%B8%80-%E5%8F%82%E6%95%B0%E5%A3%B0%E6%98%8E">一. 参数声明：</a></li>
+<li><a href="#%E4%BA%8C-%E6%B5%8B%E8%AF%95">二. 测试：</a></li>
+<li><a href="#%E4%B8%89-%E7%BB%93%E6%9E%9C">三. 结果</a></li>
+<li><a href="#%E5%9B%9B-%E6%8B%93%E5%B1%95">四. 拓展</a>
 <ul>
-<li><a href="#%E7%89%B9%E6%80%A7">特性👇</a></li>
+<li><a href="#%E8%8E%B7%E5%8F%96%E5%BD%93%E6%9C%88%E6%89%80%E6%9C%89%E5%91%A8%E6%9C%AB%E7%9A%84%E6%97%A5%E6%9C%9F">获取当月所有周末的日期</a></li>
+<li><a href="#%E7%BB%93%E6%9E%9C">结果：</a></li>
 </ul>
 </li>
+<li><a href="#%E9%99%84%E4%BB%A3%E7%A0%81%E5%8E%9F%E6%96%87%E4%BB%B6">附：代码原文件</a></li>
 </ul>
 
   </div>
@@ -532,8 +537,8 @@
           <div class="section bg-color post post-page">
             <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://liuwenxu.com/hello-gridea/">
-      Hello Gridea
+    <a class="post-title-link" href="https://liuwenxu.com/fOJ3swyxZ/">
+      获取指定时间内指定星期几的所有日期
     </a>
   </h1>
   <div class="post-meta">
@@ -541,7 +546,7 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2018-12-12 00:00:00</span>
+      <span>2020-04-26 20:40:11</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
@@ -550,8 +555,14 @@
       <span class="pc-show">分类于</span>
       
       
-      <a href="https://liuwenxu.com/qXFGcVeBq/">
-        <span>Gridea</span>
+      <a href="https://liuwenxu.com/nhcDiGsvw/">
+        <span>星期</span>
+      </a>、
+      
+      
+      
+      <a href="https://liuwenxu.com/ygIUlvScW/">
+        <span>日期</span>
       </a>
       
       
@@ -560,17 +571,17 @@
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>2分钟</span>
+      <span>3分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>298<span class="pc-show">字数</span></span>
+      <span>495<span class="pc-show">字数</span></span>
     </span>
     
     
     
-    <span id="/hello-gridea/" data-flag-title="Hello Gridea" class="meta-item pc-show leancloud_visitors">
+    <span id="/fOJ3swyxZ/" data-flag-title="获取指定时间内指定星期几的所有日期" class="meta-item pc-show leancloud_visitors">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-eye"></i>
       <span>浏览量：<span class="leancloud-visitors-count"></span></span>
@@ -579,27 +590,84 @@
   </div>
 </header>
             <div class="post-body next-md-body" id="post_body">
-              <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+              <blockquote>
+<p>输入开始时间，截止时间，星期几，三个参数，获取这两个日期之间指定星期几的日期</p>
+</blockquote>
+<h1 id="一-参数声明">一. 参数声明：</h1>
+<pre><code class="language-java">LocalDate start = LocalDate.of(2020, 4, 1);
+LocalDate end = LocalDate.of(2020, 5, 1);
+int week = 1;
+</code></pre>
+<h1 id="二-测试">二. 测试：</h1>
+<pre><code class="language-java">/**
+ * 获取指定时间内星期几的所有日期
+ * @Author liuwenxu.com (2020-04-26)
+ *
+ * @param start 开始日期 2020-04-01
+ * @param end   截止日期 2020-05-01
+ * @param week  星期几 1
+ * @return ArrayList&lt;LocalDate&gt; [2020-04-06, 2020-04-13, 2020-04-20, 2020-04-27]
+ */
+public static List getWeekInTimes(LocalDate start, LocalDate end, int week) {
+    ArrayList&lt;LocalDate&gt; list = new ArrayList&lt;&gt;();
+
+    long days = ChronoUnit.DAYS.between(start, end);
+    log.info(&quot;[{}~{})之间共有：{}天&quot;, start, end, days);
+
+    Calendar startCalender = GregorianCalendar.from(start.atStartOfDay(ZoneId.systemDefault()));
+    for (int i = 0; i &lt; days - 1; i++) {
+        startCalender.add(Calendar.DATE, 1);
+
+        if (startCalender.get(Calendar.DAY_OF_WEEK) == week + 1) {// 1代表周日，7代表周六
+            list.add(
+                    LocalDateTime.ofInstant(
+                            startCalender.toInstant(),
+                            ZoneOffset.systemDefault()
+                    ).toLocalDate()
+            );
+        }
+    }
+    log.info(&quot;[{}~{})之间共有：{}个 星期{}&quot;, start, end, list.size(), week);
+    return list;
+}
+</code></pre>
+<h1 id="三-结果">三. 结果</h1>
+<pre><code class="language-bash">- [2020-04-01~2020-05-01)之间共有：30天
+- [2020-04-01~2020-05-01)之间共有：4个 星期1
+[2020-04-06, 2020-04-13, 2020-04-20, 2020-04-27]
+</code></pre>
+<h1 id="四-拓展">四. 拓展</h1>
+<h2 id="获取当月所有周末的日期">获取当月所有周末的日期</h2>
+<pre><code class="language-java">    /**
+     * 获取当月的所有周末
+     * @Author liuwenxu.com (2020-04-26)
+     *
+     * @param year  2020
+     * @param month 4
+     * @return 
+     */
+    public static List getWeekendInMonth(int year, int month) {
+
+        List list = new ArrayList();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);// 不设置的话默认为当年
+        calendar.set(Calendar.MONTH, month - 1);// 设置月份
+        calendar.set(Calendar.DAY_OF_MONTH, 1);// 设置为当月第一天
+        int daySize = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);// 当月最大天数
+        for (int i = 0; i &lt; daySize - 1; i++) {
+            calendar.add(Calendar.DATE, 1);//在第一天的基础上加1
+            int week = calendar.get(Calendar.DAY_OF_WEEK);
+            if (week == Calendar.SATURDAY || week == Calendar.SUNDAY) {// 1代表周日，7代表周六 判断这是一个星期的第几天从而判断是否是周末
+                list.add(year + &quot;-&quot; + month + &quot;-&quot; + calendar.get(Calendar.DAY_OF_MONTH));// 得到当天是一个月的第几天
+            }
+        }
+        return list;
+    }
+</code></pre>
+<h2 id="结果">结果：</h2>
+<pre><code class="language-bash">[2020-4-4, 2020-4-5, 2020-4-11, 2020-4-12, 2020-4-18, 2020-4-19, 2020-4-25, 2020-4-26]
+</code></pre>
+<h1 id="附代码原文件">附：<a href="https://github.com/RookieXv/mybatis-plus/blob/master/src/main/java/com/example/test_case/GetWeekOfDate.java">代码原文件</a></h1>
 
             </div>
             <div class="post-footer">
@@ -610,7 +678,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://liuwenxu.com/hello-gridea/" title="Hello Gridea">https://liuwenxu.com/hello-gridea/</a>
+      <a href="https://liuwenxu.com/fOJ3swyxZ/" title="获取指定时间内指定星期几的所有日期">https://liuwenxu.com/fOJ3swyxZ/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -619,18 +687,24 @@
   </ul>
   <div class="tags">
     
-      <a href="https://liuwenxu.com/qXFGcVeBq/"># Gridea</a>
+      <a href="https://liuwenxu.com/nhcDiGsvw/"># 星期</a>
+    
+      <a href="https://liuwenxu.com/ygIUlvScW/"># 日期</a>
     
   </div>
   <div class="nav">
     <div class="nav-prev">
       
         <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="（一）初识Mybatis-Plus" href="https://liuwenxu.com/mybatis-plus-1/">（一）初识Mybatis-Plus</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="（一）初识Mybatis-Plus" href="https://liuwenxu.com/mybatis-plus-1/">上一篇</a>
+        <a class="nav-pc-next" title="Java中计算日期时间差" href="https://liuwenxu.com/H0sPFJG4g/">Java中计算日期时间差</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title="Java中计算日期时间差" href="https://liuwenxu.com/H0sPFJG4g/">上一篇</a>
       
     </div>
     <div class="nav-next">
+      
+        <a class="nav-pc-next" title="自定义Spring Boot启动图案" href="https://liuwenxu.com/LFImdFTEW/">自定义Spring Boot启动图案</a>
+        <a class="nav-mobile-next" title="自定义Spring Boot启动图案" href="https://liuwenxu.com/LFImdFTEW/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
       
     </div>
   </div>
