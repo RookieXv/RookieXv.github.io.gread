@@ -10,7 +10,7 @@
 记录一些&lt;br /&gt;&lt;br /&gt;
 编程知识、生活琐碎~">
 <meta name="theme-color" content="#000">
-<title>自定义Spring Boot启动图案 | Java那些事儿</title>
+<title>Java中各种时间类型相互转换 | Java那些事儿</title>
 <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/RookieXv/RookieXv.github.io@master/favicon.ico?v=1587919412603">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/RookieXv/RookieXv.github.io@master/styles/main.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/RookieXv/RookieXv.github.io@master/media/css/gemini.css">
@@ -41,8 +41,8 @@
   })();
 </script>
 
-  <meta name="description" content="自定义Spring Boot启动图案" />
-  <meta name="keywords" content="Spring Boot,banner" />
+  <meta name="description" content="Java中各种时间类型相互转换" />
+  <meta name="keywords" content="时间类,转换" />
 </head>
 
 <body>
@@ -186,7 +186,8 @@
       <div class="sidebar-body gemini" id="sidebar_body">
         
           
-            
+            <div class="post-side-meta" id="post_side_meta">
+              
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="https://cdn.jsdelivr.net/gh/RookieXv/RookieXv.github.io@master/images/avatar.png"/>
@@ -256,6 +257,197 @@
   </div>
 
 </div>
+            </div>
+            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
+              <div class="toc-box right-motion">
+  <div class="toc-wrapper auto-number auto"
+    id="toc_wrapper">
+    <ul class="markdownIt-TOC">
+<li><a href="#%E5%8F%82%E6%95%B0%E5%A3%B0%E6%98%8E">参数声明：</a></li>
+<li><a href="#%E8%BD%ACinstant">转Instant</a></li>
+<li><a href="#%E8%BD%AClocaldatetime">转LocalDateTime</a></li>
+<li><a href="#%E8%BD%ACzoneddatetime">转ZonedDateTime</a></li>
+<li><a href="#%E8%BD%ACdate">转Date</a></li>
+<li><a href="#%E8%BD%ACtimestamp">转Timestamp</a></li>
+<li><a href="#%E8%BD%ACcalendar">转Calendar</a></li>
+<li><a href="#%E8%BD%AClocaldate">转LocalDate</a></li>
+</ul>
+
+  </div>
+</div>
+
+<script>
+
+  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
+  let active = 'active-show', activeClass = 'active-current';
+  let tocWrapper = document.querySelector('#toc_wrapper');
+  let tocContent = tocWrapper.children[0];
+  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
+
+  function addTocNumber(elem, deep) {
+    if (!elem) {
+      return;
+    }
+    let prop = elem.__proto__;
+
+    if (prop === HTMLUListElement.prototype) {
+      for (let i = 0; i < elem.children.length; i++) {
+        addTocNumber(elem.children[i], deep + (i + 1) + '.');
+      }
+    } else if (prop === HTMLLIElement.prototype) {
+      // 保存li元素
+      if (elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
+        lList.push(elem);
+      }
+      for (let i = 0; i < elem.children.length; i++) {
+        let cur = elem.children[i];
+        if (cur.__proto__ === HTMLAnchorElement.prototype) {
+          if (autoNumber) {
+            cur.text = deep + ' ' + cur.text;
+          }
+        } else if (cur.__proto__ === HTMLUListElement.prototype) {
+          addTocNumber(cur, deep);
+        }
+      }
+    }
+  }
+
+  function removeParentActiveClass() {
+    let parents = tocContent.querySelectorAll('.' + active)
+    parents.forEach(function (elem) {
+      elem.classList.remove(active);
+    });
+  }
+
+  function addActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.add(activeClass);
+    }
+  }
+
+  function removeActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.remove(activeClass);
+    }
+  }
+
+  function addActiveLiElemment(elem, parent) {
+    if (!elem || elem === parent) {
+      return;
+    } else {
+      if (elem.__proto__ === HTMLLIElement.prototype) {
+        elem.classList.add(active);
+      }
+      addActiveLiElemment(elem.parentElement, parent);
+    }
+  }
+
+  function showToc() {
+    if (tocWrapper) {
+      postBody = document.querySelector('#post_body');
+      for (let i = 0; i < postBody.children.length; i++) {
+        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
+          hList.push(postBody.children[i]);
+        }
+      }
+      if (tocWrapper.classList.contains('compress')) {
+        tocContent.classList.add('closed');
+      } else if (tocWrapper.classList.contains('no_compress')) {
+        tocContent.classList.add('expanded');
+      } else {
+        if (hList.length > 10) {
+          active = 'active-hidden'
+          tocContent.classList.add('closed');
+        } else {
+          tocContent.classList.add('expanded');
+        }
+      }
+    }
+  }
+
+  (function () {
+    // 处理不是从#一级标题开始目录
+    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
+      let con = tocContent.children[0].children[0];
+      tocContent.innerHTML = con.innerHTML;
+    }
+    let markdownItTOC = document.querySelector('.markdownIt-TOC');
+    let innerHeight = window.innerHeight;
+    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
+    addTocNumber(tocContent, '');
+  })();
+
+  document.addEventListener('scroll', function (e) {
+    if (lList.length <= 0) {
+      return;
+    }
+    let scrollTop = document.scrollingElement.scrollTop + 10;
+    let dir;
+
+    if (lastTop - scrollTop > 0) {
+      dir = 'up';
+    } else {
+      dir = 'down';
+    }
+
+    lastTop = scrollTop;
+    if (scrollTop <= 0) {
+      if (lastIndex >= 0 && lastIndex < hList.length) {
+        lList[lastIndex].classList.remove(activeClass);
+      }
+      return;
+    }
+
+    let current = 0, hasFind = false;
+    for (let i = 0; i < hList.length; i++) {
+      if (hList[i].offsetTop > scrollTop) {
+        current = i;
+        hasFind = true;
+        break;
+      }
+    }
+    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
+      current = hList.length - 1;
+    } else {
+      current--;
+    }
+    if (dir === 'down') {
+      if (current > lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex)
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    } else {
+      if (current < lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex);
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    }
+  });
+
+  window.addEventListener('load', function () {
+    showToc();
+    document.querySelector('#sidebar').style = 'display: block;';
+    tocWrapper.classList.add('toc-active');
+    setTimeout(function () {
+      if ("createEvent" in document) {
+        let evt = document.createEvent("HTMLEvents");
+        evt.initEvent("scroll", false, true);
+        document.dispatchEvent(evt);
+      }
+      else {
+        document.fireEvent("scroll");
+      }
+    }, 500)
+  })
+
+</script>
+            </div>
           
         
       </div>
@@ -343,8 +535,8 @@
           <div class="section bg-color post post-page">
             <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://liuwenxu.com/LFImdFTEW/">
-      自定义Spring Boot启动图案
+    <a class="post-title-link" href="https://liuwenxu.com/wAXk-jYoE/">
+      Java中各种时间类型相互转换
     </a>
   </h1>
   <div class="post-meta">
@@ -352,7 +544,7 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2020-03-24 16:26:48</span>
+      <span>2020-04-27 00:38:19</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
@@ -361,14 +553,14 @@
       <span class="pc-show">分类于</span>
       
       
-      <a href="https://liuwenxu.com/RsFtFfF_K/">
-        <span>Spring Boot</span>
+      <a href="https://liuwenxu.com/yjNljNNlo/">
+        <span>时间类</span>
       </a>、
       
       
       
-      <a href="https://liuwenxu.com/FtmEkF55y/">
-        <span>banner</span>
+      <a href="https://liuwenxu.com/Fw7QYbe29H/">
+        <span>转换</span>
       </a>
       
       
@@ -377,17 +569,17 @@
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>1分钟</span>
+      <span>3分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>113<span class="pc-show">字数</span></span>
+      <span>460<span class="pc-show">字数</span></span>
     </span>
     
     
     
-    <span id="/LFImdFTEW/" data-flag-title="自定义Spring Boot启动图案" class="meta-item pc-show leancloud_visitors">
+    <span id="/wAXk-jYoE/" data-flag-title="Java中各种时间类型相互转换" class="meta-item pc-show leancloud_visitors">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-eye"></i>
       <span>浏览量：<span class="leancloud-visitors-count"></span></span>
@@ -396,34 +588,160 @@
   </div>
 </header>
             <div class="post-body next-md-body" id="post_body">
-              <p>教你怎么自定义修改<strong>Spring Boot</strong>项目启动图案，<br>
-快来学学吧 ！</p>
+              <p>😎Java 中时间类 <strong>Instant</strong>、<strong>LocalDateTime</strong>、<strong>LocalDate</strong>、<strong>Calendar</strong>、<strong>Timestamp</strong>、<strong>Date</strong>、<strong>ZonedDateTime</strong>之间相互转换</p>
 <!-- more -->
-<p>在<code>resources</code>目录下，新建<code>banner.txt</code>，将下面内容拷贝进去，重新启动即可</p>
-<pre><code class="language-java">${AnsiColor.BRIGHT_YELLOW}
-                                           _ooAoo_
-                                          o9999999o
-                                          88&quot; . &quot;88
-                                          (| -_- |)
-                                          O\  =  /O
-                                       ____/`---'\____
-                                     .'  \\|     |//  `.
-                                    /  \\|||  :  |||//  \
-                                   /  _||||| -:- |||||-  \
-                                   |   | \\\  -  /// |   |
-                                   | \_|  ''\---/''  |   |
-                                   \  .-\__  `-`  ___/-. /
-                                 ___`. .'  /--.--\  `. . __
-                              .&quot;&quot; '&lt;  `.___\_&lt;|&gt;_/___.'  &gt;'&quot;&quot;.
-                             | | :  `- \`.;`\ _ /`;.`/ - ` : | |
-                             \  \ `-.   \_ __\ /__ _/   .-` /  /
-                        ======`-.____`-.___\_____/___.-`____.-'======
-                                           `=---='
-                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                                   佛祖保佑       永无BUG
-                    ${AnsiColor.BRIGHT_CYAN}
-                    Application Version: ${application.version}${application.formatted-version}
-                    Spring Boot Version: ${spring-boot.version}${spring-boot.formatted-version}
+<blockquote>
+<p>Java中各种时间类型相互转换</p>
+</blockquote>
+<h1 id="参数声明">参数声明：</h1>
+<pre><code class="language-java">  final Date date = new Date();
+  final Timestamp timestamp = new Timestamp(date.getTime());
+  final Calendar calendar = Calendar.getInstance();
+  final Instant instant = Instant.now();
+  final LocalDateTime localDateTime = LocalDateTime.now();
+  final ZonedDateTime zonedDateTime = ZonedDateTime.now();
+  final LocalDate localDate = LocalDate.now();
+</code></pre>
+<h1 id="转instant">转Instant</h1>
+<pre><code class="language-java">    //Date转Instant
+    Instant dateInstant = date.toInstant();
+
+    //Timestamp转Instant
+    Instant timestampInstant = timestamp.toInstant();
+
+    //Calendar转Instant
+    Instant calendarInstant = calendar.toInstant();
+
+    //LocalDateTime转Instant
+    Instant localDateTimeInstant = localDateTime.atZone(ZoneId.systemDefault()).toInstant();
+
+    //ZonedDateTime转Instant
+    Instant zonedDateTimeInstant = zonedDateTime.toInstant();
+
+    //LocalDate转Instant
+    Instant localDateInstant = localDate.atStartOfDay(ZoneId.systemDefault()).toInstant();
+</code></pre>
+<h1 id="转localdatetime">转LocalDateTime</h1>
+<pre><code class="language-java">    //Date转LocalDateTime
+    LocalDateTime dateLocalDateTime = 	     LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+
+    //Timestamp转LocalDateTime
+    LocalDateTime timestampLocalDateTime = timestamp.toLocalDateTime();
+
+    //Calendar转LocalDateTime
+    LocalDateTime calendarLocalDateTime = LocalDateTime.ofInstant(calendar.toInstant(), ZoneOffset.systemDefault());
+
+    //Instant转LocalDateTime
+    LocalDateTime instantLocalDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+
+    //ZonedDateTime转LocalDateTime
+    LocalDateTime zonedDateTimeLocalDateTime = zonedDateTime.toLocalDateTime();
+
+    //LocalDate转LocalDateTime
+    LocalDateTime localDateLocalDateTime = localDate.atStartOfDay();
+</code></pre>
+<h1 id="转zoneddatetime">转ZonedDateTime</h1>
+<pre><code class="language-java">    //Date转ZonedDateTime
+    ZonedDateTime dateZonedDateTime = ZonedDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+
+    //Timestamp转ZonedDateTime
+    ZonedDateTime timestampZonedDateTime = ZonedDateTime.ofInstant(timestamp.toInstant(), ZoneId.systemDefault());
+
+    //Calendar转ZonedDateTime
+    ZonedDateTime calendarZonedDateTime = ZonedDateTime.ofInstant(calendar.toInstant(), ZoneId.systemDefault());
+
+    //Instant转ZonedDateTime
+    ZonedDateTime instantZonedDateTime = instant.atZone(ZoneId.systemDefault());
+
+    //LocalDateTime转ZonedDateTime
+    ZonedDateTime localDateTimeZonedDateTime = localDateTime.atZone(ZoneId.systemDefault());
+
+    //LocalDate转ZonedDateTime
+    ZonedDateTime localDateZonedDateTime = localDate.atStartOfDay(ZoneId.systemDefault());
+</code></pre>
+<h1 id="转date">转Date</h1>
+<pre><code class="language-java">    //Timestamp转Date
+    Date timestampDate = new Date(timestamp.getTime());
+
+    //Calendar转Date
+    Date calendarDate = calendar.getTime();
+
+    //Instant转Date
+    Date instantDate = Date.from(instant);
+
+    //LocalDateTime转Date
+    Date localDateTimeDate = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+
+    //ZonedDateTime转Date
+    Date zonedDateTimeDate = Date.from(zonedDateTime.toInstant());
+
+    //LocalDate转Date
+    Date localDateDate = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+</code></pre>
+<h1 id="转timestamp">转Timestamp</h1>
+<pre><code class="language-java">    //Date转Timestamp
+    Timestamp dateTimestamp = new Timestamp(date.getTime());
+
+    //Calendar转Timestamp
+    Timestamp calendarTimestamp = new Timestamp(calendar.getTimeInMillis());
+
+    //Instant转Timestamp
+    Timestamp instantTimestamp = Timestamp.from(instant);
+
+    //LocalDateTime转Timestamp
+    Timestamp localDateTimeTimestamp = Timestamp.valueOf(localDateTime);
+
+    //ZonedDateTime转Timestamp
+    Timestamp zonedDateTimeTimestamp = Timestamp.from(zonedDateTime.toInstant());
+
+    //LocalDate转Timestamp
+    Timestamp localDateTimestamp = Timestamp.valueOf(localDate.atStartOfDay());
+</code></pre>
+<h1 id="转calendar">转Calendar</h1>
+<pre><code class="language-java">    //Date转Calendar
+    Calendar dateCalendar = Calendar.getInstance();
+    dateCalendar.setTime(date);
+
+    //Timestamp转Calendar
+    Calendar timestampCalendar = Calendar.getInstance();
+    timestampCalendar.setTimeInMillis(timestamp.getTime());
+
+    //Instant转Calendar
+    Calendar instantCalendar = GregorianCalendar.from(ZonedDateTime.ofInstant(instant, ZoneId.systemDefault()));
+
+    //LocalDateTime转Calendar
+    Calendar localDateTimeCalendar = GregorianCalendar.from(ZonedDateTime.of(localDateTime, ZoneId.systemDefault()));
+
+    //ZonedDateTime转Calendar
+    Calendar zonedDateTimeInstantCalendar = GregorianCalendar.from(zonedDateTime);
+
+    //LocalDate转Calendar
+    Calendar localDateCalendar = GregorianCalendar.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+</code></pre>
+<h1 id="转localdate">转LocalDate</h1>
+<pre><code class="language-java">    //Date转LocalDate
+    LocalDate dateLocalDate = LocalDate.ofInstant(date.toInstant(), ZoneId.systemDefault());  //jdk11
+
+    LocalDate dateLocalDate = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).toLocalDate();
+
+    //Timestamp转LocalDate
+    LocalDate timestampLocalDate = timestamp.toLocalDateTime().toLocalDate();
+
+    //Calendar转LocalDate
+    LocalDate calendarLocalDate = LocalDate.ofInstant(calendar.toInstant(), ZoneOffset.systemDefault());  //jdk11
+
+    LocalDate calendarLocalDate = LocalDateTime.ofInstant(calendar.toInstant(), ZoneOffset.systemDefault()).toLocalDate();
+
+    //Instant转LocalDate
+    LocalDate instantLocalDate = LocalDate.ofInstant(instant, ZoneId.systemDefault());  //jdk11
+
+    LocalDate instantLocalDate = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
+
+    //LocalDateTime转LocalDate
+    LocalDate localDateTimeLocalDate = localDateTime.toLocalDate();
+
+    //ZonedDateTime转LocalDate
+    LocalDate zonedDateTimeLocalDate = zonedDateTime.toLocalDate();
 </code></pre>
 
             </div>
@@ -435,7 +753,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://liuwenxu.com/LFImdFTEW/" title="自定义Spring Boot启动图案">https://liuwenxu.com/LFImdFTEW/</a>
+      <a href="https://liuwenxu.com/wAXk-jYoE/" title="Java中各种时间类型相互转换">https://liuwenxu.com/wAXk-jYoE/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -444,23 +762,19 @@
   </ul>
   <div class="tags">
     
-      <a href="https://liuwenxu.com/RsFtFfF_K/"># Spring Boot</a>
+      <a href="https://liuwenxu.com/yjNljNNlo/"># 时间类</a>
     
-      <a href="https://liuwenxu.com/FtmEkF55y/"># banner</a>
+      <a href="https://liuwenxu.com/Fw7QYbe29H/"># 转换</a>
     
   </div>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="Java中计算日期时间差" href="https://liuwenxu.com/H0sPFJG4g/">Java中计算日期时间差</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="Java中计算日期时间差" href="https://liuwenxu.com/H0sPFJG4g/">上一篇</a>
-      
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="生成项目目录树" href="https://liuwenxu.com/wZp6XlKZp/">生成项目目录树</a>
-        <a class="nav-mobile-next" title="生成项目目录树" href="https://liuwenxu.com/wZp6XlKZp/">下一篇</a>
+        <a class="nav-pc-next" title="Java中计算日期时间差" href="https://liuwenxu.com/H0sPFJG4g/">Java中计算日期时间差</a>
+        <a class="nav-mobile-next" title="Java中计算日期时间差" href="https://liuwenxu.com/H0sPFJG4g/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>

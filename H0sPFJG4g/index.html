@@ -10,7 +10,7 @@
 记录一些&lt;br /&gt;&lt;br /&gt;
 编程知识、生活琐碎~">
 <meta name="theme-color" content="#000">
-<title>自定义Spring Boot启动图案 | Java那些事儿</title>
+<title>Java中计算日期时间差 | Java那些事儿</title>
 <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/RookieXv/RookieXv.github.io@master/favicon.ico?v=1587919412603">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/RookieXv/RookieXv.github.io@master/styles/main.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/RookieXv/RookieXv.github.io@master/media/css/gemini.css">
@@ -41,8 +41,8 @@
   })();
 </script>
 
-  <meta name="description" content="自定义Spring Boot启动图案" />
-  <meta name="keywords" content="Spring Boot,banner" />
+  <meta name="description" content="Java中计算日期时间差" />
+  <meta name="keywords" content="Java8,时间" />
 </head>
 
 <body>
@@ -186,7 +186,8 @@
       <div class="sidebar-body gemini" id="sidebar_body">
         
           
-            
+            <div class="post-side-meta" id="post_side_meta">
+              
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="https://cdn.jsdelivr.net/gh/RookieXv/RookieXv.github.io@master/images/avatar.png"/>
@@ -256,6 +257,193 @@
   </div>
 
 </div>
+            </div>
+            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
+              <div class="toc-box right-motion">
+  <div class="toc-wrapper auto-number auto"
+    id="toc_wrapper">
+    <ul class="markdownIt-TOC">
+<li><a href="#%E4%B8%80-%E5%8F%82%E6%95%B0%E5%A3%B0%E6%98%8E">一. 参数声明</a></li>
+<li><a href="#%E4%BA%8Cperiod%E7%B1%BB">二.Period类</a></li>
+<li><a href="#%E4%B8%89duration%E7%B1%BB">三.Duration类</a></li>
+<li><a href="#%E5%9B%9Bchronounit%E7%B1%BB">四.ChronoUnit类</a></li>
+</ul>
+
+  </div>
+</div>
+
+<script>
+
+  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
+  let active = 'active-show', activeClass = 'active-current';
+  let tocWrapper = document.querySelector('#toc_wrapper');
+  let tocContent = tocWrapper.children[0];
+  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
+
+  function addTocNumber(elem, deep) {
+    if (!elem) {
+      return;
+    }
+    let prop = elem.__proto__;
+
+    if (prop === HTMLUListElement.prototype) {
+      for (let i = 0; i < elem.children.length; i++) {
+        addTocNumber(elem.children[i], deep + (i + 1) + '.');
+      }
+    } else if (prop === HTMLLIElement.prototype) {
+      // 保存li元素
+      if (elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
+        lList.push(elem);
+      }
+      for (let i = 0; i < elem.children.length; i++) {
+        let cur = elem.children[i];
+        if (cur.__proto__ === HTMLAnchorElement.prototype) {
+          if (autoNumber) {
+            cur.text = deep + ' ' + cur.text;
+          }
+        } else if (cur.__proto__ === HTMLUListElement.prototype) {
+          addTocNumber(cur, deep);
+        }
+      }
+    }
+  }
+
+  function removeParentActiveClass() {
+    let parents = tocContent.querySelectorAll('.' + active)
+    parents.forEach(function (elem) {
+      elem.classList.remove(active);
+    });
+  }
+
+  function addActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.add(activeClass);
+    }
+  }
+
+  function removeActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.remove(activeClass);
+    }
+  }
+
+  function addActiveLiElemment(elem, parent) {
+    if (!elem || elem === parent) {
+      return;
+    } else {
+      if (elem.__proto__ === HTMLLIElement.prototype) {
+        elem.classList.add(active);
+      }
+      addActiveLiElemment(elem.parentElement, parent);
+    }
+  }
+
+  function showToc() {
+    if (tocWrapper) {
+      postBody = document.querySelector('#post_body');
+      for (let i = 0; i < postBody.children.length; i++) {
+        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
+          hList.push(postBody.children[i]);
+        }
+      }
+      if (tocWrapper.classList.contains('compress')) {
+        tocContent.classList.add('closed');
+      } else if (tocWrapper.classList.contains('no_compress')) {
+        tocContent.classList.add('expanded');
+      } else {
+        if (hList.length > 10) {
+          active = 'active-hidden'
+          tocContent.classList.add('closed');
+        } else {
+          tocContent.classList.add('expanded');
+        }
+      }
+    }
+  }
+
+  (function () {
+    // 处理不是从#一级标题开始目录
+    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
+      let con = tocContent.children[0].children[0];
+      tocContent.innerHTML = con.innerHTML;
+    }
+    let markdownItTOC = document.querySelector('.markdownIt-TOC');
+    let innerHeight = window.innerHeight;
+    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
+    addTocNumber(tocContent, '');
+  })();
+
+  document.addEventListener('scroll', function (e) {
+    if (lList.length <= 0) {
+      return;
+    }
+    let scrollTop = document.scrollingElement.scrollTop + 10;
+    let dir;
+
+    if (lastTop - scrollTop > 0) {
+      dir = 'up';
+    } else {
+      dir = 'down';
+    }
+
+    lastTop = scrollTop;
+    if (scrollTop <= 0) {
+      if (lastIndex >= 0 && lastIndex < hList.length) {
+        lList[lastIndex].classList.remove(activeClass);
+      }
+      return;
+    }
+
+    let current = 0, hasFind = false;
+    for (let i = 0; i < hList.length; i++) {
+      if (hList[i].offsetTop > scrollTop) {
+        current = i;
+        hasFind = true;
+        break;
+      }
+    }
+    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
+      current = hList.length - 1;
+    } else {
+      current--;
+    }
+    if (dir === 'down') {
+      if (current > lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex)
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    } else {
+      if (current < lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex);
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    }
+  });
+
+  window.addEventListener('load', function () {
+    showToc();
+    document.querySelector('#sidebar').style = 'display: block;';
+    tocWrapper.classList.add('toc-active');
+    setTimeout(function () {
+      if ("createEvent" in document) {
+        let evt = document.createEvent("HTMLEvents");
+        evt.initEvent("scroll", false, true);
+        document.dispatchEvent(evt);
+      }
+      else {
+        document.fireEvent("scroll");
+      }
+    }, 500)
+  })
+
+</script>
+            </div>
           
         
       </div>
@@ -343,8 +531,8 @@
           <div class="section bg-color post post-page">
             <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://liuwenxu.com/LFImdFTEW/">
-      自定义Spring Boot启动图案
+    <a class="post-title-link" href="https://liuwenxu.com/H0sPFJG4g/">
+      Java中计算日期时间差
     </a>
   </h1>
   <div class="post-meta">
@@ -352,7 +540,7 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2020-03-24 16:26:48</span>
+      <span>2020-04-27 00:34:10</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
@@ -361,14 +549,14 @@
       <span class="pc-show">分类于</span>
       
       
-      <a href="https://liuwenxu.com/RsFtFfF_K/">
-        <span>Spring Boot</span>
+      <a href="https://liuwenxu.com/DPvaoxIBj/">
+        <span>Java8</span>
       </a>、
       
       
       
-      <a href="https://liuwenxu.com/FtmEkF55y/">
-        <span>banner</span>
+      <a href="https://liuwenxu.com/AJe1cja3Gb/">
+        <span>时间</span>
       </a>
       
       
@@ -377,17 +565,17 @@
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>1分钟</span>
+      <span>3分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>113<span class="pc-show">字数</span></span>
+      <span>420<span class="pc-show">字数</span></span>
     </span>
     
     
     
-    <span id="/LFImdFTEW/" data-flag-title="自定义Spring Boot启动图案" class="meta-item pc-show leancloud_visitors">
+    <span id="/H0sPFJG4g/" data-flag-title="Java中计算日期时间差" class="meta-item pc-show leancloud_visitors">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-eye"></i>
       <span>浏览量：<span class="leancloud-visitors-count"></span></span>
@@ -396,34 +584,100 @@
   </div>
 </header>
             <div class="post-body next-md-body" id="post_body">
-              <p>教你怎么自定义修改<strong>Spring Boot</strong>项目启动图案，<br>
-快来学学吧 ！</p>
+              <p>⏱⏱求两个日期之间有多少天</p>
 <!-- more -->
-<p>在<code>resources</code>目录下，新建<code>banner.txt</code>，将下面内容拷贝进去，重新启动即可</p>
-<pre><code class="language-java">${AnsiColor.BRIGHT_YELLOW}
-                                           _ooAoo_
-                                          o9999999o
-                                          88&quot; . &quot;88
-                                          (| -_- |)
-                                          O\  =  /O
-                                       ____/`---'\____
-                                     .'  \\|     |//  `.
-                                    /  \\|||  :  |||//  \
-                                   /  _||||| -:- |||||-  \
-                                   |   | \\\  -  /// |   |
-                                   | \_|  ''\---/''  |   |
-                                   \  .-\__  `-`  ___/-. /
-                                 ___`. .'  /--.--\  `. . __
-                              .&quot;&quot; '&lt;  `.___\_&lt;|&gt;_/___.'  &gt;'&quot;&quot;.
-                             | | :  `- \`.;`\ _ /`;.`/ - ` : | |
-                             \  \ `-.   \_ __\ /__ _/   .-` /  /
-                        ======`-.____`-.___\_____/___.-`____.-'======
-                                           `=---='
-                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                                   佛祖保佑       永无BUG
-                    ${AnsiColor.BRIGHT_CYAN}
-                    Application Version: ${application.version}${application.formatted-version}
-                    Spring Boot Version: ${spring-boot.version}${spring-boot.formatted-version}
+<blockquote>
+<p>在 Java中，我们要获取一个时间段的天数，我们可以使用下面几种方式：</p>
+<ol>
+<li>Period                 @since 1.8</li>
+<li>Duration            @since 1.8</li>
+<li>ChronoUnit       @since 1.8</li>
+</ol>
+</blockquote>
+<h1 id="一-参数声明">一. 参数声明</h1>
+<pre><code class="language-java">LocalDate start = LocalDate.of(2020, 1, 1);
+LocalDate end = LocalDate.of(2020, 5, 1);
+</code></pre>
+<h1 id="二period类">二.Period类</h1>
+<p>主要通过<code>Period</code>类方法<code>getYears()</code>，<code>getMonths()</code> 和 <code>getDays()</code>来计算.</p>
+<p>示例:</p>
+<pre><code class="language-java">    /**
+     * @Author liuwenxu.com (2020-04-26)
+     *
+     * @param start
+     * @param end
+     * @return void
+     **/
+    private static void testPeriod(LocalDate start, LocalDate end) {
+
+        log.info(&quot;startPeriod : {}&quot;, start);
+        log.info(&quot;endPeriod : {}&quot;, end);
+
+        Period period = Period.between(start, end);
+        log.info(&quot;[{}~{})之间共有：{}年,{}月,{}日&quot;, start, end, period.getYears(), +period.getMonths(), +period.getDays());
+    }
+</code></pre>
+<p>结果:</p>
+<pre><code class="language-bash">- startPeriod : 2020-01-01
+- endPeriod : 2020-05-01
+- [2020-01-01~2020-05-01)之间共有：0年,4月,0日
+</code></pre>
+<h1 id="三duration类">三.Duration类</h1>
+<p>提供了使用基于时间的值测量时间量的方法:</p>
+<p>天数：<code>toDays()</code>;<br>
+小时：<code>toHours()</code>;<br>
+分钟：<code>toMinutes()</code>;<br>
+秒数：<code>toMillis()</code>;<br>
+纳秒：<code>toNanos()</code>;</p>
+<p>示例: 转换日期时提前一天</p>
+<pre><code class="language-java">    /**
+     * @Author liuwenxu.com (2020-04-26)
+     *
+     * @param start
+     * @param end
+     * @return void
+     **/
+    private static void testDuration(LocalDate start, LocalDate end) {
+
+        Instant startInstant = start.atStartOfDay(ZoneId.systemDefault()).toInstant();
+        Instant endInstant = end.atStartOfDay(ZoneId.systemDefault()).toInstant();
+
+        log.info(&quot;startInstant : {}&quot;, startInstant);
+        log.info(&quot;endInstant : {}&quot;, endInstant);
+
+        Duration between = Duration.between(startInstant, endInstant);
+        log.info(&quot;[{}~{})之间共有：{}天&quot;, start, end, between.toDays());
+
+    }
+</code></pre>
+<p>结果:</p>
+<pre><code class="language-bash">- startInstant : 2019-12-31T16:00:00Z
+- endInstant : 2020-04-30T16:00:00Z
+- [2020-01-01~2020-05-01)之间共有：121天
+</code></pre>
+<h1 id="四chronounit类">四.ChronoUnit类</h1>
+<p>ChronoUnit类使用<code>between()</code>方法求在单个时间单位内测量一段时间，例如天数、小时、周或秒等。</p>
+<p>示例:</p>
+<pre><code class="language-java">	/**
+     * @Author liuwenxu.com (2020-04-26)
+     *
+     * @param start
+     * @param end
+     * @return void
+     **/
+    private static void testChronoUnit(LocalDate start, LocalDate end) {
+        log.info(&quot;startChronoUnit : {}&quot;, start);
+        log.info(&quot;endChronoUnit : {}&quot;, end);
+
+        long daysDiff = ChronoUnit.DAYS.between(start, end);
+        log.info(&quot;[{}~{})之间共有：{}天&quot;, start, end, daysDiff);
+
+    }
+</code></pre>
+<p>结果:</p>
+<pre><code class="language-bash">- startInstant : 2020-01-01
+- endInstant : 2020-05-01
+- [2020-01-01~2020-05-01)之间共有：121天
 </code></pre>
 
             </div>
@@ -435,7 +689,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://liuwenxu.com/LFImdFTEW/" title="自定义Spring Boot启动图案">https://liuwenxu.com/LFImdFTEW/</a>
+      <a href="https://liuwenxu.com/H0sPFJG4g/" title="Java中计算日期时间差">https://liuwenxu.com/H0sPFJG4g/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -444,23 +698,23 @@
   </ul>
   <div class="tags">
     
-      <a href="https://liuwenxu.com/RsFtFfF_K/"># Spring Boot</a>
+      <a href="https://liuwenxu.com/DPvaoxIBj/"># Java8</a>
     
-      <a href="https://liuwenxu.com/FtmEkF55y/"># banner</a>
+      <a href="https://liuwenxu.com/AJe1cja3Gb/"># 时间</a>
     
   </div>
   <div class="nav">
     <div class="nav-prev">
       
         <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="Java中计算日期时间差" href="https://liuwenxu.com/H0sPFJG4g/">Java中计算日期时间差</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="Java中计算日期时间差" href="https://liuwenxu.com/H0sPFJG4g/">上一篇</a>
+        <a class="nav-pc-next" title="Java中各种时间类型相互转换" href="https://liuwenxu.com/wAXk-jYoE/">Java中各种时间类型相互转换</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title="Java中各种时间类型相互转换" href="https://liuwenxu.com/wAXk-jYoE/">上一篇</a>
       
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="生成项目目录树" href="https://liuwenxu.com/wZp6XlKZp/">生成项目目录树</a>
-        <a class="nav-mobile-next" title="生成项目目录树" href="https://liuwenxu.com/wZp6XlKZp/">下一篇</a>
+        <a class="nav-pc-next" title="自定义Spring Boot启动图案" href="https://liuwenxu.com/LFImdFTEW/">自定义Spring Boot启动图案</a>
+        <a class="nav-mobile-next" title="自定义Spring Boot启动图案" href="https://liuwenxu.com/LFImdFTEW/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>
