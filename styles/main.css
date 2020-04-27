@@ -2062,9 +2062,7 @@ pre > span.copy-code:hover {
 .hljs-strong {
   font-weight: bold;
 }
-.bg-color .bg-color {
-      background: transparent !important;
-    }body {
+body {
       background-color: #eee;
     }
     .nav-toggle .line {
@@ -2088,7 +2086,7 @@ pre > span.copy-code:hover {
       border-bottom-color: #555;
     }
     .archive-timeline-box::after, .tag-timeline-wrapper::after {
-      background: #eeeeee7f;
+      background: #eeeeeefe;
     }h1, h2, h3, h4, h5, h6 {
       color: #555;
     }
@@ -2132,11 +2130,11 @@ pre > span.copy-code:hover {
       }.nav-item a:hover {
         color: #222;
       }.nav-item-active {
-      background: #f9f9f97f;
+      background: #f9f9f9fe;
     }
 
     .nav-item:hover {
-      background: #f9f9f97f;
+      background: #f9f9f9fe;
       color: rgba(0, 0, 0, 0.98);
     }.site-author-image {
       border-radius: 50%;
@@ -2172,7 +2170,7 @@ pre > span.copy-code:hover {
       color: #ff6b6b;
       border-bottom-color: #ff6b6b;
     }.bg-color {
-      background-color: #ffffff7f;
+      background-color: #fffffffe;
     }
       .site-meta {
         background: #000 !important;
@@ -2181,13 +2179,13 @@ pre > span.copy-code:hover {
         background: #000 !important;
       }
     .brand {
-      background: #0000007f;
+      background: #000000fe;
     }
     .main-title {
       color: #FFF;
     }
     .mist .site-title i {
-      background: #FFFFFF7f;
+      background: #FFFFFFfe;
     }.box-shadow-wrapper {
       padding: 10px;
     }.box-shadow-wrapper {
