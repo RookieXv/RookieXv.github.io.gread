@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://liuwenxu.com</id>
     <title>Java那些事儿</title>
-    <updated>2020-04-27T08:19:43.319Z</updated>
+    <updated>2020-04-29T16:49:03.916Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://liuwenxu.com"/>
     <link rel="self" href="https://liuwenxu.com/atom.xml"/>
@@ -12,6 +12,213 @@
     <logo>https://liuwenxu.com/images/avatar.png</logo>
     <icon>https://liuwenxu.com/favicon.ico</icon>
     <rights>All rights reserved 2020, Java那些事儿</rights>
+    <entry>
+        <title type="html"><![CDATA[二、《Nacao系列》之注册中心]]></title>
+        <id>https://liuwenxu.com/_jKjN73u7/</id>
+        <link href="https://liuwenxu.com/_jKjN73u7/">
+        </link>
+        <updated>2020-04-29T16:46:10.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="nacos注册中心">Nacos注册中心</h1>
+<p>服务注册中心本质上是为了解耦服务提供者和服务消费者。对于任何一个微服务，原则上都应存在或者支持多个提供者，这是由微服务的分布式属性决定的。</p>
+<h2 id="1-cap理论">1、CAP理论</h2>
+<p>CAP理论是分布式架构中的重要理论。</p>
+<ul>
+<li>C：一致性(Consistency) (所有节点在同一时间具有相同的数据)</li>
+<li>A：可用性(Availability) (保证每个请求不管成功或者失败都有响应)</li>
+<li>P：分隔容忍(Partition tolerance) (系统中任意信息的丢失或失败不会影响系统的继续运作)</li>
+</ul>
+<h2 id="2-主流注册中心对比">2、主流注册中心对比</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Nacos</th>
+<th>Eureka</th>
+<th>Consul</th>
+<th>CoreDNS</th>
+<th style="text-align:left">Zookeeper</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>一致性协议</strong></td>
+<td>CP+AP</td>
+<td>AP</td>
+<td>CP</td>
+<td>—</td>
+<td style="text-align:left">CP</td>
+</tr>
+<tr>
+<td><strong>健康检查</strong></td>
+<td>TCP/HTTP/MYSQL/Client  Beat</td>
+<td>Client Beat</td>
+<td>TCP/HTTP/gRPC/Cmd</td>
+<td>—</td>
+<td style="text-align:left">Keep Alive</td>
+</tr>
+<tr>
+<td><strong>负载均衡策略</strong></td>
+<td>权重/metadata/Selector</td>
+<td>Ribbon</td>
+<td>Fabio</td>
+<td>RoundRobin</td>
+<td style="text-align:left">—</td>
+</tr>
+<tr>
+<td><strong>雪崩保护</strong></td>
+<td>有</td>
+<td>有</td>
+<td>无</td>
+<td>无</td>
+<td style="text-align:left">无</td>
+</tr>
+<tr>
+<td><strong>自动注销实例</strong></td>
+<td>支持</td>
+<td>支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td style="text-align:left">支持</td>
+</tr>
+<tr>
+<td><strong>访问协议</strong></td>
+<td>HTTP/DNS</td>
+<td>HTTP</td>
+<td>HTTP/DNS</td>
+<td>DNS</td>
+<td style="text-align:left">TCP</td>
+</tr>
+<tr>
+<td><strong>监听支持</strong></td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>不支持</td>
+<td style="text-align:left">支持</td>
+</tr>
+<tr>
+<td><strong>多数据中心</strong></td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>不支持</td>
+<td style="text-align:left">不支持</td>
+</tr>
+<tr>
+<td><strong>跨注册中心同步</strong></td>
+<td>支持</td>
+<td>不支持</td>
+<td>支持</td>
+<td>不支持</td>
+<td style="text-align:left">不支持</td>
+</tr>
+<tr>
+<td><strong>SpringCloud集成</strong></td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>不支持</td>
+<td style="text-align:left">不支持</td>
+</tr>
+<tr>
+<td><strong>Dubbo集成</strong></td>
+<td>支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td style="text-align:left">支持</td>
+</tr>
+<tr>
+<td><strong>K8S集成</strong></td>
+<td>支持</td>
+<td>不支持</td>
+<td>支持</td>
+<td>支持</td>
+<td style="text-align:left">不支持</td>
+</tr>
+</tbody>
+</table>
+<p>Nacos除了服务的注册发现之外，还支持动态配置服务。</p>
+<p>一句话概括就是Nacos = Spring Cloud注册中心 + Spring Cloud配置中心。</p>
+<h2 id="3-集成到springcloud中">3、集成到SpringCloud中</h2>
+<p>创建好SC父工程，添加子模块</p>
+<h3 id="1添加pom">1）添加pom</h3>
+<pre><code class="language-xml">&lt;dependency&gt;
+	&lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
+	&lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-discovery&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h3 id="2主启动类添加注解">2）主启动类添加注解</h3>
+<pre><code class="language-java">@EnableDiscoveryClient
+</code></pre>
+<h3 id="3添加applicationyml配置文件">3）添加application.yml配置文件</h3>
+<pre><code class="language-yml">spring:
+  application:
+    name: user
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+</code></pre>
+<p>如果不想使用 Nacos 作为您的服务注册与发现，可以将<code>spring.cloud.nacos.discovery</code> 设置为 <code>false</code></p>
+<h3 id="4启动项目">4）启动项目</h3>
+<p>以nacos/nacos，登录到<a href="http://127.0.0.1:8848/nacos">127.0.0.1:8848/nacos</a>，可以看到user服务已经注册成功：</p>
+<figure data-type="image" tabindex="1"><img src="https://liuwenxu.com/post-images/1588178808183.png" alt="" loading="lazy"></figure>
+<h3 id="5服务的-endpoint">5）服务的 EndPoint</h3>
+<p>spring-cloud-starter-alibaba-nacos-discovery 在实现的时候提供了一个<code>EndPoint</code>,<code>EndPoint</code>的访问地址为 <a href="http://ip:port/actuator/nacos-discovery">http://ip:port/actuator/nacos-discovery</a>。 EndPoint 的信息主要提供了两类:</p>
+<p>1、subscribe: 显示了当前有哪些服务订阅者<br>
+2、NacosDiscoveryProperties: 显示了当前服务实例关于 Nacos 的基础配置</p>
+<figure data-type="image" tabindex="2"><img src="https://liuwenxu.com/post-images/1588178816496.png" alt="" loading="lazy"></figure>
+<p>至此，Spring Cloud使用Nacos作为注册中心已经初步完成，其他配置根据自身业务修改即可。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[一、《Nacao系列》之安装与启动]]></title>
+        <id>https://liuwenxu.com/2zJ9JSOcH/</id>
+        <link href="https://liuwenxu.com/2zJ9JSOcH/">
+        </link>
+        <updated>2020-04-29T16:41:39.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="一-nacos简介">一、Nacos简介</h1>
+<p><strong>官网介绍</strong>：<code>Nacos</code>致力于帮助您<strong>发现</strong>、<strong>配置</strong>和<strong>管理</strong>微服务。</p>
+<p>https://nacos.io/zh-cn/index.html</p>
+<p>Nacos 提供了一组简单易用的特性集，帮助您快速实现动态服务发现、服务配置、服务元数据及流量管理。</p>
+<p>Nacos 帮助您更敏捷和容易地构建、交付和管理微服务平台。 Nacos 是构建以“服务”为中心的现代应用架构 (例如微服务范式、云原生范式) 的服务基础设施。</p>
+<figure data-type="image" tabindex="1"><img src="https://liuwenxu.com/post-images/1588178537437.jpg" alt="" loading="lazy"></figure>
+<h1 id="二-安装和启动">二、安装和启动</h1>
+<h2 id="1-安装">1、安装</h2>
+<h3 id="1官网下载压缩包">1）官网下载压缩包</h3>
+<p>https://github.com/alibaba/nacos/releases</p>
+<figure data-type="image" tabindex="2"><img src="https://liuwenxu.com/post-images/1588178579638.png" alt="" loading="lazy"></figure>
+<h3 id="2github下载">2）Github下载</h3>
+<pre><code class="language-bash">git clone https://github.com/alibaba/nacos.git
+cd nacos/
+mvn -Prelease-nacos -Dmaven.test.skip=true clean install -U  
+ls -al distribution/target/
+
+// change the $version to your actual path
+cd distribution/target/nacos-server-$version/nacos/bin
+</code></pre>
+<h2 id="2-启动">2、启动</h2>
+<h3 id="linuxunixmac">Linux/Unix/Mac</h3>
+<p>启动命令(standalone代表着单机模式运行，非集群模式):</p>
+<pre><code class="language-bash">sh startup.sh -m standalone
+</code></pre>
+<p>如果您使用的是ubuntu系统，或者运行脚本报错提示[[符号找不到，可尝试如下运行：</p>
+<pre><code class="language-bash">bash startup.sh -m standalone
+</code></pre>
+<h3 id="windows">Windows</h3>
+<p>启动命令：</p>
+<pre><code class="language-bash">cmd startup.cmd
+</code></pre>
+<p>或者双击<font color=red>startup.cmd</font>运行文件。</p>
+<figure data-type="image" tabindex="3"><img src="https://liuwenxu.com/post-images/1588178609962.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Java中各种时间类型相互转换]]></title>
         <id>https://liuwenxu.com/wAXk-jYoE/</id>
@@ -634,537 +841,6 @@ INSERT INTO `test` VALUES (2, NULL);
  
      }
  }
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[（三）Mybatis-Plus代码生成器]]></title>
-        <id>https://liuwenxu.com/mybatis-plus-3/</id>
-        <link href="https://liuwenxu.com/mybatis-plus-3/">
-        </link>
-        <updated>2019-09-28T10:38:17.000Z</updated>
-        <content type="html"><![CDATA[<blockquote>
-<p>上一篇我们已经把所有需要的东西配置好了，接下来我们准备连接数据库生成代码。</p>
-</blockquote>
-<p>首先准备一张student表：</p>
-<pre><code class="language-sql">SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
-
--- ----------------------------
--- Table structure for student
--- ----------------------------
-DROP TABLE IF EXISTS `student`;
-CREATE TABLE `student`  (
-  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '学生id',
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '姓名',
-  `age` int(11) NULL DEFAULT NULL COMMENT '年龄',
-  `is_valid` int(11) NULL DEFAULT NULL COMMENT '是否在读',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
-SET FOREIGN_KEY_CHECKS = 1;
-</code></pre>
-<figure data-type="image" tabindex="1"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动" loading="lazy"></figure>
-<h1 id="一-配置代码生成器">一、配置代码生成器</h1>
-<blockquote>
-<p>Mybatis-Plus的代码生成器是不需要依赖spring的，所以我们可以直接在test中新建一个类<strong>CodeGeneratorDefault</strong></p>
-</blockquote>
-<h2 id="默认模板生成"><strong>默认模板生成：</strong></h2>
-<pre><code class="language-java">import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.baomidou.mybatisplus.generator.AutoGenerator;
-import com.baomidou.mybatisplus.generator.InjectionConfig;
-import com.baomidou.mybatisplus.generator.config.*;
-import com.baomidou.mybatisplus.generator.config.po.TableInfo;
-import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
-public class CodeGeneratorDefault {
-
-
-    /**
-     * &lt;p&gt;
-     * 读取控制台内容
-     * &lt;/p&gt;
-     */
-
-    public static String scanner(String tip) {
-        Scanner scanner = new Scanner(System.in);
-        StringBuilder help = new StringBuilder();
-        help.append(&quot;请输入&quot; + tip + &quot;：&quot;);
-        System.out.println(help.toString());
-        if (scanner.hasNext()) {
-            String ipt = scanner.next();
-            if (StringUtils.isNotEmpty(ipt)) {
-                return ipt;
-            }
-        }
-        throw new MybatisPlusException(&quot;请输入正确的&quot; + tip + &quot;！&quot;);
-    }
-
-    public static void main(String[] args) {
-        // 代码生成器
-        AutoGenerator mpg = new AutoGenerator();
-
-        // 全局配置
-        GlobalConfig gc = new GlobalConfig();
-        String projectPath = System.getProperty(&quot;user.dir&quot;);
-        gc.setOutputDir(projectPath + &quot;/src/main/java&quot;);
-        gc.setAuthor(&quot;liuwenxu&quot;);
-        gc.setOpen(false);
-        gc.setSwagger2(true); // 实体属性 Swagger2 注解
-        mpg.setGlobalConfig(gc);
-
-        // 数据源配置
-        DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl(&quot;jdbc:mysql://172.30.7.143:3306/wxyj_sj?serverTimezone=UTC&amp;characterEncoding=utf-8&amp;useSSL=false&quot;);
-        // dsc.setSchemaName(&quot;public&quot;);
-        dsc.setDriverName(&quot;com.mysql.cj.jdbc.Driver&quot;);
-        dsc.setUsername(&quot;wxyj&quot;);
-        dsc.setPassword(&quot;123456&quot;);
-        mpg.setDataSource(dsc);
-
-        // 包配置
-        PackageConfig pc = new PackageConfig();
-        pc.setModuleName(scanner(&quot;模块名&quot;));
-        pc.setParent(&quot;com.example&quot;);
-        mpg.setPackageInfo(pc);
-
-        // 自定义配置
-        InjectionConfig cfg = new InjectionConfig() {
-            @Override
-            public void initMap() {
-                // to do nothing
-            }
-        };
-        List&lt;FileOutConfig&gt; focList = new ArrayList&lt;&gt;();
-        focList.add(new FileOutConfig(&quot;/templates/mapper.xml.ftl&quot;) {
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                // 自定义输入文件名称
-                return projectPath + &quot;/src/main/resources/mapper/&quot; + pc.getModuleName()
-                        + &quot;/&quot; + tableInfo.getEntityName() + &quot;Mapper&quot; + StringPool.DOT_XML;
-            }
-        });
-        cfg.setFileOutConfigList(focList);
-        mpg.setCfg(cfg);
-        mpg.setTemplate(new TemplateConfig().setXml(null));
-
-        // 策略配置
-        StrategyConfig strategy = new StrategyConfig();
-        strategy.setNaming(NamingStrategy.underline_to_camel);
-        strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-        //strategy.setSuperEntityClass(&quot;com.baomidou.ant.common.BaseEntity&quot;);
-        strategy.setEntityLombokModel(true);
-        strategy.setRestControllerStyle(true);
-        //strategy.setSuperControllerClass(&quot;com.baomidou.ant.common.BaseController&quot;);
-        strategy.setInclude(scanner(&quot;表名&quot;));
-        //strategy.setSuperEntityColumns(&quot;id&quot;);
-        strategy.setControllerMappingHyphenStyle(true);
-        strategy.setTablePrefix(&quot;_&quot;);
-        mpg.setStrategy(strategy);
-        mpg.setTemplateEngine(new FreemarkerTemplateEngine());
-        mpg.execute();
-    }
-}
-</code></pre>
-<figure data-type="image" tabindex="2"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动" loading="lazy"></figure>
-<p>点击运行，在输入栏按照以下流程执行即可</p>
-<p><img src="https://img-blog.csdnimg.cn/20190926114008477.png" alt="img" loading="lazy"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动" loading="lazy"></p>
-<p>执行后项目结构如下：</p>
-<pre><code class="language-bash">├─src
-│  ├─main
-│  │  ├─java
-│  │  │  └─com
-│  │  │      └─example
-│  │  │          └─mybatisplus
-│  │  │              │  MybatisPlusApplication.java
-│  │  │              │
-│  │  │              ├─config
-│  │  │              │      SwaggerConfig.java
-│  │  │              │
-│  │  │              ├─controller
-│  │  │              │      StudentController.java
-│  │  │              │
-│  │  │              ├─entity
-│  │  │              │      Student.java
-│  │  │              │
-│  │  │              ├─mapper
-│  │  │              │      StudentMapper.java
-│  │  │              │
-│  │  │              └─service
-│  │  │                  │  IStudentService.java
-│  │  │                  │
-│  │  │                  └─impl
-│  │  │                          StudentServiceImpl.java
-│  │  │
-│  │  └─resources
-│  │      │  application.yml
-│  │      │
-│  │      ├─mapper
-│  │      │  └─mybatisplus
-│  │      │          StudentMapper.xml
-│  │      │
-│  │      ├─static
-│  │      └─templates
-│  │              controller-mine.java.ftl
-│  │              entity-mine.java.ftl
-│  │              mapper-mine.java.ftl
-│  │              service-mine.java.ftl
-│  │              serviceImpl-mine.java.ftl
-│  │
-│  └─test
-│      └─java
-│              CodeGenerator.java
-│              CodeGeneratorDefault.java
-</code></pre>
-<figure data-type="image" tabindex="3"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动" loading="lazy"></figure>
-<h2 id="自定义模板生成"><strong>自定义模板生成：</strong></h2>
-<blockquote>
-<p>有些小伙伴不满足于默认模板生成的文件，下面我们来演示自定义模板：</p>
-</blockquote>
-<p><strong>1、添加freemarker依赖：</strong></p>
-<pre><code class="language-bash">&lt;dependency&gt;
-    &lt;groupId&gt;org.freemarker&lt;/groupId&gt;
-    &lt;artifactId&gt;freemarker&lt;/artifactId&gt;
-    &lt;version&gt;2.3.23&lt;/version&gt;
-&lt;/dependency&gt;
-</code></pre>
-<figure data-type="image" tabindex="4"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动" loading="lazy"></figure>
-<p><strong>2、编写自定义模板：（文末有源码链接）</strong></p>
-<pre><code>controller-mine.java.ftl
-entity-mine.java.ftl
-mapper-mine.java.ftl
-service-mine.java.ftl
-serviceImpl-mine.java.ftl
-</code></pre>
-<figure data-type="image" tabindex="5"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动" loading="lazy"></figure>
-<p><strong>3、修改代码生成器配置：</strong></p>
-<pre><code class="language-java">import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.baomidou.mybatisplus.generator.AutoGenerator;
-import com.baomidou.mybatisplus.generator.InjectionConfig;
-import com.baomidou.mybatisplus.generator.config.*;
-import com.baomidou.mybatisplus.generator.config.po.TableInfo;
-import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
-public class CodeGenerator {
-
-
-    /**
-     * &lt;p&gt;
-     * 读取控制台内容
-     * &lt;/p&gt;
-     */
-
-    public static String scanner(String tip) {
-        Scanner scanner = new Scanner(System.in);
-        StringBuilder help = new StringBuilder();
-        help.append(&quot;请输入&quot; + tip + &quot;：&quot;);
-        System.out.println(help.toString());
-        if (scanner.hasNext()) {
-            String ipt = scanner.next();
-            if (StringUtils.isNotEmpty(ipt)) {
-                return ipt;
-            }
-        }
-        throw new MybatisPlusException(&quot;请输入正确的&quot; + tip + &quot;！&quot;);
-    }
-
-    public static void main(String[] args) {
-        // 代码生成器
-        AutoGenerator mpg = new AutoGenerator();
-
-        // 全局配置
-        GlobalConfig gc = new GlobalConfig();
-        String projectPath = System.getProperty(&quot;user.dir&quot;);
-        gc.setOutputDir(projectPath + &quot;/src/main/java&quot;);
-        gc.setAuthor(&quot;liuwenxu&quot;);
-        gc.setOpen(false);
-        gc.setSwagger2(true); // 实体属性 Swagger2 注解
-        mpg.setGlobalConfig(gc);
-
-        // 数据源配置
-        DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl(&quot;jdbc:mysql://172.30.7.143:3306/wxyj_sj?serverTimezone=UTC&amp;characterEncoding=utf-8&amp;useSSL=false&quot;);
-        // dsc.setSchemaName(&quot;public&quot;);
-        dsc.setDriverName(&quot;com.mysql.cj.jdbc.Driver&quot;);
-        dsc.setUsername(&quot;wxyj&quot;);
-        dsc.setPassword(&quot;123456&quot;);
-        mpg.setDataSource(dsc);
-
-        // 包配置
-        PackageConfig pc = new PackageConfig();
-        pc.setModuleName(scanner(&quot;模块名&quot;));
-        pc.setParent(&quot;com.example&quot;);
-        mpg.setPackageInfo(pc);
-
-        // 自定义配置
-        InjectionConfig cfg = new InjectionConfig() {
-            @Override
-            public void initMap() {
-                // to do nothing
-            }
-        };
-        List&lt;FileOutConfig&gt; focList = new ArrayList&lt;&gt;();
-        focList.add(new FileOutConfig(&quot;/templates/mapper.xml.ftl&quot;) {
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                // 自定义输入文件名称
-                return projectPath + &quot;/src/main/resources/mapper/&quot; + pc.getModuleName()
-                        + &quot;/&quot; + tableInfo.getEntityName() + &quot;Mapper&quot; + StringPool.DOT_XML;
-            }
-        });
-        cfg.setFileOutConfigList(focList);
-        mpg.setCfg(cfg);
-
-        // 配置模板
-        TemplateConfig templateConfig = new TemplateConfig();
-
-        // 配置自定义输出模板
-        //指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
-        templateConfig.setEntity(&quot;templates/entity-mine.java&quot;);
-        templateConfig.setMapper(&quot;templates/mapper-mine.java&quot;);
-        templateConfig.setService(&quot;templates/service-mine.java&quot;);
-        templateConfig.setServiceImpl(&quot;templates/serviceImpl-mine.java&quot;);
-        templateConfig.setController(&quot;templates/controller-mine.java&quot;);
-        templateConfig.setXml(null);
-        mpg.setTemplate(templateConfig);
-
-        // 策略配置
-        StrategyConfig strategy = new StrategyConfig();
-        strategy.setNaming(NamingStrategy.underline_to_camel);
-        strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-        //strategy.setSuperEntityClass(&quot;com.baomidou.ant.common.BaseEntity&quot;);
-        strategy.setEntityLombokModel(true);
-        strategy.setRestControllerStyle(true);
-        //strategy.setSuperControllerClass(&quot;com.baomidou.ant.common.BaseController&quot;);
-        strategy.setInclude(scanner(&quot;表名&quot;));
-        //strategy.setSuperEntityColumns(&quot;id&quot;);
-        strategy.setControllerMappingHyphenStyle(true);
-        strategy.setTablePrefix(&quot;_&quot;);
-        mpg.setStrategy(strategy);
-        mpg.setTemplateEngine(new FreemarkerTemplateEngine());
-        mpg.execute();
-    }
-}
-</code></pre>
-<h1 id="二-总结">二、总结</h1>
-<p>至此，<code>mybatis plus</code> 的基础使用已经介绍完了，后面我将陆续为大家介绍她的高级用法，收藏一下吧！</p>
-<h2 id="附项目源码">附：<a href="https://github.com/RookieXv/mybatis-plus">项目源码</a></h2>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[（二）Mybatis-Plus的安装配置]]></title>
-        <id>https://liuwenxu.com/mybatis-plus-2/</id>
-        <link href="https://liuwenxu.com/mybatis-plus-2/">
-        </link>
-        <updated>2019-09-27T01:41:21.000Z</updated>
-        <content type="html"><![CDATA[<blockquote>
-<p>上一篇文章我们认识了Mybatis-Plus，这篇文章我们一起学习Mybatis-Plus在项目中怎么使用。</p>
-</blockquote>
-<p><strong>项目结构如下：</strong></p>
-<pre><code class="language-bash">  src
-   ├─main
-   │  ├─java
-   │  │  └─com
-   │  │      └─example
-   │  │          └─mybatisplus
-   │  │              └─config
-   │  └─resources
-   │      ├─static
-   │      └─templates
-   └─test
-       └─java
-           └─com
-               └─example
-                   └─mybatisplus
-</code></pre>
-<figure data-type="image" tabindex="1"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动" loading="lazy"></figure>
-<h1 id="一-安装">一、安装</h1>
-<p>全新的 <code>MyBatis-Plus</code> 3.0 版本基于 JDK8，提供了 <code>lambda</code> 形式的调用，所以安装集成 MP3.0 要求如下：</p>
-<ul>
-<li>JDK 8+</li>
-<li>Maven</li>
-</ul>
-<p>JDK7 以及下的请参考 MP2.0 版本官方文档，地址：<a href="https://baomidou.gitee.io/mybatis-plus-doc/#/">2.0 文档</a></p>
-<p>我们在该项目中集成了mybatis-plus，lombok，swagger，集体配置如下：</p>
-<h2 id="spring-boot"># Spring Boot</h2>
-<p>Maven：</p>
-<pre><code class="language-java">&lt;properties&gt;
-    &lt;java.version&gt;1.8&lt;/java.version&gt;
-    &lt;spring-boot.version&gt;2.0.5.RELEASE&lt;/spring-boot.version&gt;
-    &lt;mybatis-plus.version&gt;3.0-RELEASE&lt;/mybatis-plus.version&gt;
-    &lt;swagger.version&gt;2.9.2&lt;/swagger.version&gt;
-    &lt;lombok.version&gt;1.16.10&lt;/lombok.version&gt;
-&lt;/properties&gt;
-</code></pre>
-<pre><code class="language-bash">&lt;!-- 连接mysql --&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;mysql&lt;/groupId&gt;
-    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
-&lt;/dependency&gt;
-&lt;!-- mybatis-plus --&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;com.baomidou&lt;/groupId&gt;
-    &lt;artifactId&gt;mybatis-plus-boot-starter&lt;/artifactId&gt;
-    &lt;version&gt;${mybatis-plus.version}&lt;/version&gt;
-&lt;/dependency&gt;
-&lt;!-- lombok --&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
-    &lt;artifactId&gt;lombok&lt;/artifactId&gt;
-    &lt;version&gt;${lombok.version}&lt;/version&gt;
-    &lt;scope&gt;provided&lt;/scope&gt;
-&lt;/dependency&gt;
-&lt;!-- swagger配置 --&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;io.springfox&lt;/groupId&gt;
-    &lt;artifactId&gt;springfox-swagger2&lt;/artifactId&gt;
-    &lt;version&gt;${swagger.version}&lt;/version&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;io.springfox&lt;/groupId&gt;
-    &lt;artifactId&gt;springfox-swagger-ui&lt;/artifactId&gt;
-    &lt;version&gt;${swagger.version}&lt;/version&gt;
-&lt;/dependency&gt;
-</code></pre>
-<h2 id="spring-mvc"># Spring MVC</h2>
-<p>Maven:</p>
-<pre><code class="language-bash">&lt;!-- mybatis-plus --&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;com.baomidou&lt;/groupId&gt;
-    &lt;artifactId&gt;mybatis-plus&lt;/artifactId&gt;
-    &lt;version&gt;${mybatis-plus.version}&lt;/version&gt;
-&lt;/dependency&gt;
-&lt;!-- 连接mysql --&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;mysql&lt;/groupId&gt;
-    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
-&lt;/dependency&gt;
-&lt;!-- lombok --&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
-    &lt;artifactId&gt;lombok&lt;/artifactId&gt;
-    &lt;version&gt;${lombok.version}&lt;/version&gt;
-    &lt;scope&gt;provided&lt;/scope&gt;
-&lt;/dependency&gt;
-&lt;!-- swagger配置 --&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;io.springfox&lt;/groupId&gt;
-    &lt;artifactId&gt;springfox-swagger2&lt;/artifactId&gt;
-    &lt;version&gt;${swagger.version}&lt;/version&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;io.springfox&lt;/groupId&gt;
-    &lt;artifactId&gt;springfox-swagger-ui&lt;/artifactId&gt;
-    &lt;version&gt;${swagger.version}&lt;/version&gt;
-&lt;/dependency&gt;
-</code></pre>
-<hr>
-<p>引入 <code>MyBatis-Plus</code> 之后请不要再次引入 <code>MyBatis</code> 以及 <code>MyBatis-Spring</code>，以避免因版本差异导致的问题。</p>
-<h1 id="二-配置">二、配置</h1>
-<p>MyBatis-Plus 的配置异常的简单，我们仅需要一些简单的配置即可使用 MyBatis-Plus 的强大功能。</p>
-<h2 id="spring-boot-2"># Spring Boot</h2>
-<h3 id="配置-mapperscan-注解"><strong>配置 MapperScan 注解</strong></h3>
-<pre><code class="language-java">@SpringBootApplication
-@MapperScan(&quot;com.example.mybatis-plus.**.mapper&quot;)
-public class MybatisPlusApplication {
-
-    public static void main(String[] args) {
-        SpringApplication.run(MybatisPlusApplication.class, args);
-    }
-
-}
-</code></pre>
-<h3 id="配置applicationyml"><strong>配置application.yml</strong></h3>
-<pre><code class="language-bash">mybatis-plus:
-  # xml地址
-  mapper-locations: classpath*:mapper/*/*Mapper.xml
-  # 实体扫描，多个package用逗号或者分号分隔 #自己的实体类地址
-  type-aliases-package: com.example.mybatis-plus
-  configuration:
-    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-    #开启驼峰命名法
-    map-underscore-to-camel-case: true
-</code></pre>
-<h2 id="spring-mvc-2"># Spring MVC</h2>
-<ul>
-<li>
-<h3 id="配置-mapperscan"><strong>配置 MapperScan</strong></h3>
-</li>
-</ul>
-<pre><code class="language-bash">&lt;bean class=&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;&gt;
-    &lt;property name=&quot;basePackage&quot; value=&quot;com.baomidou.mybatisplus.samples.quickstart.mapper&quot;/&gt;
-&lt;/bean&gt;
-</code></pre>
-<ul>
-<li>
-<h3 id="调整-sqlsessionfactory-为-mybatis-plus-的-sqlsessionfactory"><strong>调整 SqlSessionFactory 为 MyBatis-Plus 的 SqlSessionFactory</strong></h3>
-</li>
-</ul>
-<pre><code class="language-bash">&lt;bean id=&quot;sqlSessionFactory&quot; class=&quot;com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean&quot;&gt;
-    &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;/&gt;
-&lt;/bean&gt;
-</code></pre>
-<p>通常来说，一般的简单工程，通过以上配置即可正常使用 MyBatis-Plus。</p>
-<h2 id="swagger配置"># swagger配置</h2>
-<pre><code class="language-java">package com.example.mybatisplus.config;
-
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
-
-/**
- * Copyright (C), 2016-2019, Mobius-Vision
- * FileName: SwaggerConfig
- * Author: liuwenxu
- * Date: 2019/7/10 14:59
- * Description: 接口文档说明  http://localhost:8089/swagger-ui.html#/
- */
-@Configuration
-@EnableSwagger2
-public class SwaggerConfig {
-    @Bean
-    public Docket createRestApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .select()
-                .apis(RequestHandlerSelectors.basePackage(&quot;com.example.mybatis-plus.controller&quot;))
-                .paths(PathSelectors.any())
-                .build();
-    }
-
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title(&quot;mybatis-plus&quot;)
-                .description(&quot;mybatis-plus&quot;)
-                .contact(new Contact(&quot;liuwenxu&quot;, &quot;&quot;, &quot;&quot;))
-                .version(&quot;2.0&quot;)
-                .build();
-    }
-
-}
- 
 </code></pre>
 ]]></content>
     </entry>
