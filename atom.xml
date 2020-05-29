@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://liuwenxu.com</id>
     <title>Java那些事儿</title>
-    <updated>2020-05-29T09:09:27.733Z</updated>
+    <updated>2020-05-29T09:19:34.478Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://liuwenxu.com"/>
     <link rel="self" href="https://liuwenxu.com/atom.xml"/>
@@ -179,8 +179,8 @@ management:
     </entry>
     <entry>
         <title type="html"><![CDATA[一、《Nacao系列》之安装与启动]]></title>
-        <id>https://liuwenxu.com/Nacao-quick start/</id>
-        <link href="https://liuwenxu.com/Nacao-quick start/">
+        <id>https://liuwenxu.com/Nacao-quick_start/</id>
+        <link href="https://liuwenxu.com/Nacao-quick_start/">
         </link>
         <updated>2020-04-29T16:41:39.000Z</updated>
         <content type="html"><![CDATA[<h1 id="一-nacos简介">一、Nacos简介</h1>

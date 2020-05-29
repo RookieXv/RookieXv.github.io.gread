@@ -10,7 +10,7 @@
 记录一些&lt;br /&gt;&lt;br /&gt;
 编程知识、生活琐碎~">
 <meta name="theme-color" content="#000">
-<title>Java那些事儿</title>
+<title>一、《Nacao系列》之安装与启动 | Java那些事儿</title>
 <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/RookieXv/RookieXv.github.io@master/favicon.ico?v=1590743956409">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/RookieXv/RookieXv.github.io@master/styles/main.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/RookieXv/RookieXv.github.io@master/media/css/gemini.css">
@@ -41,6 +41,8 @@
   })();
 </script>
 
+  <meta name="description" content="一、《Nacao系列》之安装与启动" />
+  <meta name="keywords" content="Spring Cloud,Nacos" />
 </head>
 
 <body>
@@ -76,7 +78,7 @@
             
               
             
-            <li class="nav-item nav-item-active">
+            <li class="nav-item ">
               
               
                 <a href="/" target="_self">
@@ -168,8 +170,24 @@
     <div
       class="section-layout gemini ">
       <div class="section-layout-wrapper">
-        <div id="sidebarMeta" class="sidebar">
-    
+        
+
+<div class="sidebar">
+  
+    <div class="sidebar-box box-shadow-wrapper bg-color right-motion" id="sidebar">
+      
+        <div class="post-list-sidebar">
+          <div class="sidebar-title">
+            <span id="tocSideBar" class="sidebar-title-item sidebar-title-active">文章目录</span>
+            <span id="metaSideBar" class="sidebar-title-item">站点概览</span>
+          </div>
+        </div>
+      
+      <div class="sidebar-body gemini" id="sidebar_body">
+        
+          
+            <div class="post-side-meta" id="post_side_meta">
+              
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="https://cdn.jsdelivr.net/gh/RookieXv/RookieXv.github.io@master/images/avatar.png"/>
@@ -239,30 +257,295 @@
   </div>
 
 </div>
+            </div>
+            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
+              <div class="toc-box right-motion">
+  <div class="toc-wrapper auto-number auto"
+    id="toc_wrapper">
+    <ul class="markdownIt-TOC">
+<li><a href="#%E4%B8%80-nacos%E7%AE%80%E4%BB%8B">一、Nacos简介</a></li>
+<li><a href="#%E4%BA%8C-%E5%AE%89%E8%A3%85%E5%92%8C%E5%90%AF%E5%8A%A8">二、安装和启动</a>
+<ul>
+<li><a href="#1-%E5%AE%89%E8%A3%85">1、安装</a>
+<ul>
+<li><a href="#1%E5%AE%98%E7%BD%91%E4%B8%8B%E8%BD%BD%E5%8E%8B%E7%BC%A9%E5%8C%85">1）官网下载压缩包</a></li>
+<li><a href="#2github%E4%B8%8B%E8%BD%BD">2）Github下载</a></li>
+</ul>
+</li>
+<li><a href="#2-%E5%90%AF%E5%8A%A8">2、启动</a>
+<ul>
+<li><a href="#linuxunixmac">Linux/Unix/Mac</a></li>
+<li><a href="#windows">Windows</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
 </div>
+
 <script>
-  let sidebarMeta = document.querySelector('#sidebarMeta');
-  let scheme = 'gemini';
-  let sidebarWrapper = document.querySelector('.sidebar-wrapper');
-  if (sidebarMeta && (scheme === 'pisces' || scheme === 'gemini')) {
-    document.addEventListener('scroll', function(e) {
-      if (document.scrollingElement.scrollTop > parseInt(sidebarMeta.style.marginTop) + 10) {
-        sidebarWrapper.classList.add('home-sidebar-fixed')
-      } else {
-        sidebarWrapper.classList.remove('home-sidebar-fixed')
+
+  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
+  let active = 'active-show', activeClass = 'active-current';
+  let tocWrapper = document.querySelector('#toc_wrapper');
+  let tocContent = tocWrapper.children[0];
+  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
+
+  function addTocNumber(elem, deep) {
+    if (!elem) {
+      return;
+    }
+    let prop = elem.__proto__;
+
+    if (prop === HTMLUListElement.prototype) {
+      for (let i = 0; i < elem.children.length; i++) {
+        addTocNumber(elem.children[i], deep + (i + 1) + '.');
       }
+    } else if (prop === HTMLLIElement.prototype) {
+      // 保存li元素
+      if (elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
+        lList.push(elem);
+      }
+      for (let i = 0; i < elem.children.length; i++) {
+        let cur = elem.children[i];
+        if (cur.__proto__ === HTMLAnchorElement.prototype) {
+          if (autoNumber) {
+            cur.text = deep + ' ' + cur.text;
+          }
+        } else if (cur.__proto__ === HTMLUListElement.prototype) {
+          addTocNumber(cur, deep);
+        }
+      }
+    }
+  }
+
+  function removeParentActiveClass() {
+    let parents = tocContent.querySelectorAll('.' + active)
+    parents.forEach(function (elem) {
+      elem.classList.remove(active);
     });
   }
-  </script>
-        <div class="section-box gemini">
-          <section class="section  posts-expand slide-down-in">
-            
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
+
+  function addActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.add(activeClass);
+    }
+  }
+
+  function removeActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.remove(activeClass);
+    }
+  }
+
+  function addActiveLiElemment(elem, parent) {
+    if (!elem || elem === parent) {
+      return;
+    } else {
+      if (elem.__proto__ === HTMLLIElement.prototype) {
+        elem.classList.add(active);
+      }
+      addActiveLiElemment(elem.parentElement, parent);
+    }
+  }
+
+  function showToc() {
+    if (tocWrapper) {
+      postBody = document.querySelector('#post_body');
+      for (let i = 0; i < postBody.children.length; i++) {
+        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
+          hList.push(postBody.children[i]);
+        }
+      }
+      if (tocWrapper.classList.contains('compress')) {
+        tocContent.classList.add('closed');
+      } else if (tocWrapper.classList.contains('no_compress')) {
+        tocContent.classList.add('expanded');
+      } else {
+        if (hList.length > 10) {
+          active = 'active-hidden'
+          tocContent.classList.add('closed');
+        } else {
+          tocContent.classList.add('expanded');
+        }
+      }
+    }
+  }
+
+  (function () {
+    // 处理不是从#一级标题开始目录
+    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
+      let con = tocContent.children[0].children[0];
+      tocContent.innerHTML = con.innerHTML;
+    }
+    let markdownItTOC = document.querySelector('.markdownIt-TOC');
+    let innerHeight = window.innerHeight;
+    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
+    addTocNumber(tocContent, '');
+  })();
+
+  document.addEventListener('scroll', function (e) {
+    if (lList.length <= 0) {
+      return;
+    }
+    let scrollTop = document.scrollingElement.scrollTop + 10;
+    let dir;
+
+    if (lastTop - scrollTop > 0) {
+      dir = 'up';
+    } else {
+      dir = 'down';
+    }
+
+    lastTop = scrollTop;
+    if (scrollTop <= 0) {
+      if (lastIndex >= 0 && lastIndex < hList.length) {
+        lList[lastIndex].classList.remove(activeClass);
+      }
+      return;
+    }
+
+    let current = 0, hasFind = false;
+    for (let i = 0; i < hList.length; i++) {
+      if (hList[i].offsetTop > scrollTop) {
+        current = i;
+        hasFind = true;
+        break;
+      }
+    }
+    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
+      current = hList.length - 1;
+    } else {
+      current--;
+    }
+    if (dir === 'down') {
+      if (current > lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex)
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    } else {
+      if (current < lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex);
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    }
+  });
+
+  window.addEventListener('load', function () {
+    showToc();
+    document.querySelector('#sidebar').style = 'display: block;';
+    tocWrapper.classList.add('toc-active');
+    setTimeout(function () {
+      if ("createEvent" in document) {
+        let evt = document.createEvent("HTMLEvents");
+        evt.initEvent("scroll", false, true);
+        document.dispatchEvent(evt);
+      }
+      else {
+        document.fireEvent("scroll");
+      }
+    }, 500)
+  })
+
+</script>
+            </div>
+          
+        
+      </div>
+    </div>
+  
+</div>
+<script>
+  const SIDEBAR_TITLE_ACTIVE = 'sidebar-title-active';
+  const SIDEBAR_BODY_ACTIVE = 'sidebar-body-active';
+  const SLIDE_UP_IN = 'slide-up-in';
+
+  let sidebar = document.querySelector('#sidebar'),
+  tocSideBar = document.querySelector('#tocSideBar'),
+  metaSideBar = document.querySelector('#metaSideBar'),
+  postToc = document.querySelector('#post_toc'),
+  postSiteMeta = document.querySelector('#post_side_meta'),
+  sidebarTitle = document.querySelector('.sidebar-title'),
+  sidebarBody = document.querySelector('#sidebar_body');
+
+  tocSideBar && tocSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  metaSideBar && metaSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  function toggleSidebar(e) {
+    let currentTitle = document.querySelector("."+SIDEBAR_TITLE_ACTIVE);
+    if (currentTitle == e.srcElement) {
+      return ;
+    }
+    let current, showElement, hideElement;
+    if (e.srcElement == metaSideBar) {
+      showElement = postSiteMeta;
+      hideElement = postToc;
+    } else if (e.srcElement == tocSideBar){
+      showElement = postToc;
+      hideElement = postSiteMeta;
+    }
+    currentTitle.classList.remove(SIDEBAR_TITLE_ACTIVE);
+    e.srcElement.classList.add(SIDEBAR_TITLE_ACTIVE);
+
+    window.Velocity(hideElement, 'stop');
+    window.Velocity(hideElement, 'transition.slideUpOut', {
+      display: 'none',
+      duration: 200,
+      complete: function () {
+        window.Velocity(showElement, 'transition.slideDownIn', {
+          duration: 200
+        });
+      }
+    })
+    hideElement.classList.remove(SIDEBAR_BODY_ACTIVE);
+    showElement.classList.add(SIDEBAR_BODY_ACTIVE);
+  }
+
+  postToc && postToc.addEventListener('transitionend', function() {
+    this.classList.remove(SLIDE_UP_IN);
+  });
+
+  if (sidebarBody) {
+    if (sidebarBody.classList.contains('pisces') || sidebarBody.classList.contains('gemini')) {
+      let hasFix = false;
+      let scrollEl = document.querySelector('.main-continer');
+      let limitTop = document.querySelector('#nav_ul').children.length * 42 + 162;
+      window.addEventListener('scroll', function(e) {
+        if (document.scrollingElement.scrollTop >= limitTop) {
+          if (!hasFix) {
+            sidebar.classList.add('sidebar-fixed');
+            hasFix = true;
+          }
+        } else {
+          if (hasFix) {
+            sidebar.classList.remove('sidebar-fixed');
+            hasFix = false;
+          }
+        }
+      });
+    }
+  }
+  
+</script>
+        <div class="section-box box-shadow-wrapper">
+          <div class="section bg-color post post-page">
+            <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://liuwenxu.com/mybatis-plus-3/">
-      （三）Mybatis-Plus代码生成器
+    <a class="post-title-link" href="https://liuwenxu.com/Nacao-quick_start/">
+      一、《Nacao系列》之安装与启动
     </a>
   </h1>
   <div class="post-meta">
@@ -270,7 +553,7 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2019-09-28 18:38:17</span>
+      <span>2020-04-30 00:41:39</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
@@ -279,188 +562,14 @@
       <span class="pc-show">分类于</span>
       
       
-      <a href="https://liuwenxu.com/_TOY9Nt2V/">
-        <span>Mybatis Plus</span>
+      <a href="https://liuwenxu.com/mrhh-Nqr9/">
+        <span>Spring Cloud</span>
       </a>、
       
       
       
-      <a href="https://liuwenxu.com/RsFtFfF_K/">
-        <span>Spring Boot</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>8分钟</span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>1386<span class="pc-show">字数</span></span>
-    </span>
-    
-  </div>
-</header>
-      <div class="post-body">
-        
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn" href="https://liuwenxu.com/mybatis-plus-3/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-    </div>
-  </article>
-
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://liuwenxu.com/mybatis-plus-2/">
-      （二）Mybatis-Plus的安装配置
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span>发布于</span>
-      <span>2019-09-27 09:41:21</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show">分类于</span>
-      
-      
-      <a href="https://liuwenxu.com/_TOY9Nt2V/">
-        <span>Mybatis Plus</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>6分钟</span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>985<span class="pc-show">字数</span></span>
-    </span>
-    
-  </div>
-</header>
-      <div class="post-body">
-        
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn" href="https://liuwenxu.com/mybatis-plus-2/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-    </div>
-  </article>
-
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://liuwenxu.com/mybatis-plus-1/">
-      （一）初识Mybatis-Plus
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span>发布于</span>
-      <span>2019-09-26 14:35:16</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show">分类于</span>
-      
-      
-      <a href="https://liuwenxu.com/_TOY9Nt2V/">
-        <span>Mybatis Plus</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>3分钟</span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>712<span class="pc-show">字数</span></span>
-    </span>
-    
-  </div>
-</header>
-      <div class="post-body">
-        
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn" href="https://liuwenxu.com/mybatis-plus-1/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-    </div>
-  </article>
-
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://liuwenxu.com/hello-gridea/">
-      Hello Gridea
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span>发布于</span>
-      <span>2018-12-12 00:00:00</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show">分类于</span>
-      
-      
-      <a href="https://liuwenxu.com/qXFGcVeBq/">
-        <span>Gridea</span>
+      <a href="https://liuwenxu.com/dUf5e4Pj9L/">
+        <span>Nacos</span>
       </a>
       
       
@@ -474,59 +583,146 @@
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>298<span class="pc-show">字数</span></span>
+      <span>283<span class="pc-show">字数</span></span>
+    </span>
+    
+    
+    
+    <span id="/Nacao-quick_start/" data-flag-title="一、《Nacao系列》之安装与启动" class="meta-item pc-show leancloud_visitors">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-eye"></i>
+      <span>浏览量：<span class="leancloud-visitors-count"></span></span>
     </span>
     
   </div>
 </header>
-      <div class="post-body">
-        
-          <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+            <div class="post-body next-md-body" id="post_body">
+              <h1 id="一-nacos简介">一、Nacos简介</h1>
+<p><strong>官网介绍</strong>：<code>Nacos</code>致力于帮助您<strong>发现</strong>、<strong>配置</strong>和<strong>管理</strong>微服务。</p>
+<p><a href="https://nacos.io/zh-cn/index.html">https://nacos.io/zh-cn/index.html</a></p>
+<p>Nacos 提供了一组简单易用的特性集，帮助您快速实现动态服务发现、服务配置、服务元数据及流量管理。</p>
+<p>Nacos 帮助您更敏捷和容易地构建、交付和管理微服务平台。 Nacos 是构建以“服务”为中心的现代应用架构 (例如微服务范式、云原生范式) 的服务基础设施。</p>
+<figure data-type="image" tabindex="1"><img src="https://liuwenxu.com/post-images/1588178537437.jpg" alt="" loading="lazy"></figure>
+<h1 id="二-安装和启动">二、安装和启动</h1>
+<h2 id="1-安装">1、安装</h2>
+<h3 id="1官网下载压缩包">1）官网下载压缩包</h3>
+<p><a href="https://github.com/alibaba/nacos/releases">https://github.com/alibaba/nacos/releases</a></p>
+<figure data-type="image" tabindex="2"><img src="https://liuwenxu.com/post-images/1588178579638.png" alt="" loading="lazy"></figure>
+<h3 id="2github下载">2）Github下载</h3>
+<pre><code class="language-bash">git clone https://github.com/alibaba/nacos.git
+cd nacos/
+mvn -Prelease-nacos -Dmaven.test.skip=true clean install -U  
+ls -al distribution/target/
 
-        
-        
-        <div class="post-button text-center">
-          <a class="btn" href="https://liuwenxu.com/hello-gridea/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
+// change the $version to your actual path
+cd distribution/target/nacos-server-$version/nacos/bin
+</code></pre>
+<h2 id="2-启动">2、启动</h2>
+<h3 id="linuxunixmac">Linux/Unix/Mac</h3>
+<p>启动命令(standalone代表着单机模式运行，非集群模式):</p>
+<pre><code class="language-bash">sh startup.sh -m standalone
+</code></pre>
+<p>如果您使用的是ubuntu系统，或者运行脚本报错提示[[符号找不到，可尝试如下运行：</p>
+<pre><code class="language-bash">bash startup.sh -m standalone
+</code></pre>
+<h3 id="windows">Windows</h3>
+<p>启动命令：</p>
+<pre><code class="language-bash">cmd startup.cmd
+</code></pre>
+<p>或者双击<font color=red>startup.cmd</font>运行文件。</p>
+<figure data-type="image" tabindex="3"><img src="https://liuwenxu.com/post-images/1588178609962.png" alt="" loading="lazy"></figure>
+
+            </div>
+            <div class="post-footer">
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      刘文旭
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuwenxu.com/Nacao-quick_start/" title="一、《Nacao系列》之安装与启动">https://liuwenxu.com/Nacao-quick_start/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i> BY-NC-SA</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+  <div class="tags">
+    
+      <a href="https://liuwenxu.com/mrhh-Nqr9/"># Spring Cloud</a>
+    
+      <a href="https://liuwenxu.com/dUf5e4Pj9L/"># Nacos</a>
+    
+  </div>
+  <div class="nav">
+    <div class="nav-prev">
+      
+        <i class="fa fa-chevron-left"></i>
+        <a class="nav-pc-next" title="二、《Nacos系列》之注册中心" href="https://liuwenxu.com/Nacao-registry/">二、《Nacos系列》之注册中心</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title="二、《Nacos系列》之注册中心" href="https://liuwenxu.com/Nacao-registry/">上一篇</a>
       
     </div>
-  </article>
-  
-            
-            
-<div class="page bg-color">
-  <ul class="pagination-ul">
-    
-      <li class="pagination-dir">
-        <a href="https://liuwenxu.com/">
-          <i class="fa fa-angle-left"></i>
-        </a>
-      </li>
-    
-    
+    <div class="nav-next">
       
-        <li class="pagination-li ">
-            <a href="/page/../">
-              1
-            </a>
-        </li>
+        <a class="nav-pc-next" title="Java中各种时间类型相互转换" href="https://liuwenxu.com/Java中各种时间类型相互转换/">Java中各种时间类型相互转换</a>
+        <a class="nav-mobile-next" title="Java中各种时间类型相互转换" href="https://liuwenxu.com/Java中各种时间类型相互转换/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
       
-        <li class="pagination-li pagination-active">
-            <a href="/page/2">
-              2
-            </a>
-        </li>
-      
-    
-    
-  </ul>
+    </div>
+  </div>
 </div>
-          </section>
+
+            
+  <script src="https://cdn.jsdelivr.net/npm/valine@1.4.4/dist/Valine.min.js"></script>
+<div id="vcomments" style="padding: 10px 0px 0px 0px"></div>
+
+<style>
+  .v .veditor {
+    min-height: 10rem;
+    background-image: url('');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    background-color: rgba(255, 255, 255, 0);
+    resize: none;
+  }
+
+  .v .vwrap {
+    border: 1px solid #000 !important;
+  }
+
+  .v .vbtn {
+    padding: .4rem 1.2rem !important;
+    border-color: #fff !important;
+    background-color: #49b1f5 !important;
+    color: #fff !important;
+    font-size: .7rem !important;
+  }
+
+  .v .vcards .vcard .vh .vmeta .vat {
+    padding: 0 .8rem !important;
+    border: 1px solid #00c4b6 !important;
+    border-radius: 5px !important;
+    color: #00c4b6 !important;
+  }
+</style>
+<script>
+  new Valine({
+    el: '#vcomments',
+    appId: 'E9bQfM6iA6DLO0dIDBfcNCGg-gzGzoHsz',
+    appKey: 'J4c2BepQrWR9xGXraOEyqkhA',
+    avatar: 'robohash',
+    placeholder: ' (｡♥ᴗ♥｡) 勾搭一下~',
+    pageSize: '5',
+    lang: 'zh-cn',
+    visitor: 'true' === 'true',
+    highlight: 'true' === 'true',
+    avatarForce: 'true' === 'false',
+  });
+</script>
+
+          </div>
         </div>
       </div>
     </div>
@@ -2315,5 +2511,4 @@ public class SwaggerConfig {
 <script src="/media/js/mouse/love.js"></script>
 
 <!-- <script src="/media/js/mouse/peace.js"></script> -->
-
 </html>
